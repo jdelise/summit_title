@@ -14,4 +14,19 @@ class PagesController extends Controller
         }
         return redirect('');
     }
+    function order_title_work() {
+
+    }
+    public function services()
+    {
+        return view('pages.services');
+    }
+    public function location()
+    {
+
+    }
+    public function contact()
+    {
+        return view('pages.contact');
+    }
 }

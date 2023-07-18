@@ -89,7 +89,7 @@
                     <div class="border grid grid-cols-2 p-5 rounded">
 
                         <div class="col-md-4">
-                            <h4 class="text-2xl text-blue-500">Seller's Net</h4>
+                            <h4 class="text-2xl text-blue-500">Seller's Proceeds</h4>
                             <h3 x-money.en-US.USD.decimal="funds_to_seller" class="text-3xl text-green-700"></h3>
                             <span class="text-sm">Net At Close</span>
                         </div>

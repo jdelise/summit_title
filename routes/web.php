@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('pages.home');
-});
+})->name('home');
 Route::get('/test-home', function () {
     return view('test.test_home');
 });
@@ -34,7 +34,16 @@ Route::post('/calculateFees', [\App\Http\Controllers\SellerNetsheet::class, 'cal
 Route::post('/saveSellersNetSheet', [\App\Http\Controllers\SellerNetsheet::class, 'saveSellersNetSheet']);
 Route::post('/updateSellersNetSheet', [\App\Http\Controllers\SellerNetsheet::class, 'updateSellersNetSheet']);
 Route::get('/calculateFees', [\App\Http\Controllers\SellerNetsheet::class, 'calculateFees']);
+
+
 Route::get('seller-net-sheet', [\App\Http\Controllers\SellerNetsheet::class, 'index']);
+Route::get('oder_title_work',[PagesController::class, 'oder_title_work'])->name('oder_title_work');
+Route::get('services',[PagesController::class, 'services'])->name('services');
+Route::get('location', [PagesController::class, 'location'])->name('location');
+Route::get('order_title_work', [PagesController::class,'oder_title_work'])->name('order_title_work');
+Route::get('contact', [PagesController::class,'contact'])->name('contact');
+
+
 Route::get('/admin', function () {
     return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('admin');

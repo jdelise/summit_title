@@ -31,7 +31,7 @@
                             <path d="M5.27921 2L10.9257 7.64645C11.1209 7.84171 11.1209 8.15829 10.9257 8.35355L5.27921 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         </svg>
                     </a>
-                    <a class="inline-flex justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-green-400 to-green-700 shadow-lg shadow-transparent hover:shadow-green-700/50 border border-transparent text-white text-sm font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-white py-3 px-6" href="#">
+                    <a class="inline-flex justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-green-400 to-green-700 shadow-lg shadow-transparent hover:shadow-green-700/50 border border-transparent text-white text-sm font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-white py-3 px-6" href="{{route('login')}}">
                         Agents, Log in here
                         <svg class="w-2.5 h-2.5" width="16" height="16" viewBox="0 0 16 16" fill="none">
                             <path d="M5.27921 2L10.9257 7.64645C11.1209 7.84171 11.1209 8.15829 10.9257 8.35355L5.27921 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -51,17 +51,17 @@
             <div class="grid md:grid-cols-2 gap-12">
                 <div class="content-center grid lg:w-3/4">
                     <h2 class="text-3xl font-bold lg:text-4xl text-white">
-                        Collaborative tools to design better user experience
+                        Experience the Summit Title Difference
                     </h2>
                     <p class="mt-3 text-gray-400">
-                        We help businesses bring ideas to life in the digital world, by designing and implementing the technology tools that they need to win.
+                        At Summit Title, we are committed to serving real estate professionals, builders, and lenders with superior title services. We believe in fostering lasting partnerships, prioritizing accuracy, and promoting security in all transactions.
                     </p>
-                    <p class="mt-5 inline-flex items-center gap-x-2 font-medium text-blue-500">
-                        Contact sales to learn more
+                    <a class="mt-5 inline-flex items-center gap-x-2 font-medium text-blue-500" href="/contact">
+                        Contact us to learn more
                         <svg class="w-2.5 h-2.5 transition ease-in-out group-hover:translate-x-1" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M0.975821 6.92249C0.43689 6.92249 -3.50468e-07 7.34222 -3.27835e-07 7.85999C-3.05203e-07 8.37775 0.43689 8.79749 0.975821 8.79749L12.7694 8.79748L7.60447 13.7596C7.22339 14.1257 7.22339 14.7193 7.60447 15.0854C7.98555 15.4515 8.60341 15.4515 8.98449 15.0854L15.6427 8.68862C16.1191 8.23098 16.1191 7.48899 15.6427 7.03134L8.98449 0.634573C8.60341 0.268455 7.98555 0.268456 7.60447 0.634573C7.22339 1.00069 7.22339 1.59428 7.60447 1.9604L12.7694 6.92248L0.975821 6.92249Z" fill="currentColor"/>
                         </svg>
-                    </p>
+                    </a>
                 </div>
                 <!-- End Col -->
 
@@ -77,10 +77,10 @@
         </span>
                         <div class="ml-5 sm:ml-8">
                             <h3 class="text-base sm:text-lg font-semibold text-gray-200">
-                                Industry-leading documentation
+                                Personalized Service:
                             </h3>
                             <p class="mt-1 text-gray-400">
-                                Our documentation and extensive Client libraries contain everything a business needs to build a custom integration in a fraction of the time.
+                                We tailor our services to match the unique needs of real estate agents, builders, and lenders.
                             </p>
                         </div>
                     </div>
@@ -97,11 +97,10 @@
         </span>
                         <div class="ml-5 sm:ml-8">
                             <h3 class="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-200">
-                                Developer community support
+                                Trust and Security:
                             </h3>
                             <p class="mt-1 text-gray-600 dark:text-gray-400">
-                                We actively contribute to open-source projects—giving back to the community through development, patches, and sponsorships.
-                            </p>
+                                We prioritize the protection and confidentiality of your transactions.                            </p>
                         </div>
                     </div>
                     <!-- End Icon Block -->
@@ -116,10 +115,10 @@
         </span>
                         <div class="ml-5 sm:ml-8">
                             <h3 class="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-200">
-                                Simple and affordable
+                                Expert Guidance:
                             </h3>
                             <p class="mt-1 text-gray-600 dark:text-gray-400">
-                                From boarding passes to movie tickets, there's pretty much nothing you can't store with Preline.
+                                We share our knowledge and expertise to facilitate your decision-making process.
                             </p>
                         </div>
                     </div>
@@ -144,15 +143,16 @@
                     </defs>
                 </svg>
                 <div class="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
-                    <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Boost your productivity.<br>Start using our app today.</h2>
-                    <p class="mt-6 text-lg leading-8 text-gray-300">Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla.</p>
+                    <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Seller Net Proceeds Estimator -<br>Empower Your Decisions</h2>
+                    <p class="mt-6 text-lg leading-8 text-gray-300">
+                        Our Seller Net Proceeds Estimator tool is designed to empower real estate agents, builders, and lenders with critical insights to make informed decisions.
+                    </p>
                     <div class="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
-                        <a href="#" class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Get started</a>
-                        <a href="#" class="text-sm font-semibold leading-6 text-white">Learn more <span aria-hidden="true">→</span></a>
+                        <a href="{{route('sellers_net_sheet')}}" class="text-sm font-semibold leading-6 text-white">Start here <span aria-hidden="true">→</span></a>
                     </div>
                 </div>
                 <div class="relative mt-16 h-80 lg:mt-8">
-                    <img class="absolute left-0 top-0 w-[57rem] max-w-none rounded-md bg-white/5 ring-1 ring-white/10" src="https://tailwindui.com/img/component-images/dark-project-app-screenshot.png" alt="App screenshot" width="1824" height="1080">
+                    <img class="absolute left-0 top-0 w-[57rem] max-w-none rounded-md bg-white/5 ring-1 ring-white/10" src="/images/net_sheet_screeshot.jpg" alt="Net Sheet screenshot" width="1824" height="1080">
                 </div>
             </div>
         </div>
