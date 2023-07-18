@@ -1,0 +1,3 @@
+<div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 pb-20 space-y-8">
+    {{$slot}}
+</div>

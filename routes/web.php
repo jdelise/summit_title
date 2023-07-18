@@ -1,0 +1,77 @@
+<?php
+
+use App\Helpers\UploadHelper;
+use App\Http\Controllers\PagesController;
+use App\Http\Controllers\ProfileController;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+Route::get('/', function () {
+    return view('pages.home');
+});
+Route::get('/test-home', function () {
+    return view('test.test_home');
+});
+Route::get('/tools/sellers_net_sheet', function (){
+    return view('pages.client_net_sheet');
+})->name('sellers_net_sheet');
+//Route::get('/test', [\App\Http\Controllers\SellerNetsheet::class, 'index']);
+Route::get('/fee', [\App\Http\Controllers\SellerNetsheet::class, 'getTitlePremium']);
+Route::get('/printSellerNetSheet/{id}', [\App\Http\Controllers\SellerNetsheet::class, 'printSellerNetSheet']);
+Route::post('/calculateFees', [\App\Http\Controllers\SellerNetsheet::class, 'calculateFees']);
+Route::post('/saveSellersNetSheet', [\App\Http\Controllers\SellerNetsheet::class, 'saveSellersNetSheet']);
+Route::post('/updateSellersNetSheet', [\App\Http\Controllers\SellerNetsheet::class, 'updateSellersNetSheet']);
+Route::get('/calculateFees', [\App\Http\Controllers\SellerNetsheet::class, 'calculateFees']);
+Route::get('seller-net-sheet', [\App\Http\Controllers\SellerNetsheet::class, 'index']);
+Route::get('/admin', function () {
+    return view('admin.dashboard');
+})->middleware(['auth', 'verified'])->name('admin');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
+
+Route::get('/csv', [\App\Http\Controllers\TestingController::class, 'uploadCSV']);
+
+Route::get('/dash', function () {
+    return view('admin.dashboard');
+});
+
+Route::get('/test', function () {
+    $prior_year_tax = 3000;
+    $closing_date = '2023/11/11';
+
+    $dailyTax = number_format($prior_year_tax / 365, 2);
+    $dt = Carbon::parse($closing_date);
+    $first_tax = Carbon::parse($dt->format('Y') . '/05/10');
+    $second_tax = Carbon::parse($dt->format('Y') . '/11/10');
+    $prior_year_taxes = 0;
+    if ($dt->gt($first_tax)){
+        if($dt->gt($second_tax)){
+            $prior_year_taxes = ($dt->dayOfYear * $dailyTax) + $prior_year_tax;
+        }else{
+            $prior_year_taxes = ($prior_year_tax / 2) + ($dt->dayOfYear * $dailyTax);
+        }
+
+    }else{
+        $prior_year_taxes =  ($dt->dayOfYear * $dailyTax) + $prior_year_tax;
+    }
+
+    dd($prior_year_taxes);
+});
