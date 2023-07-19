@@ -62,6 +62,17 @@
 
                     </div>
                     <div class="mb-4 sm:mb-8">
+                        <label class="block mb-2 text-sm font-medium">Closing Fees Paid By:</label>
+                        <div class="flex items-center gap-x-2">
+                            <input type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" x-model="feesPaidBy" value="seller">
+                            <label  class="block text-sm font-medium leading-6 text-gray-900">Seller</label>
+                            <input  type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" x-model="feesPaidBy" value="split">
+                            <label  class="block text-sm font-medium leading-6 text-gray-900">Split</label>
+                            <input  type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" x-model="feesPaidBy" value="buyer">
+                            <label  class="block text-sm font-medium leading-6 text-gray-900">Buyer</label>
+                        </div>
+                    </div>
+                    <div class="mb-4 sm:mb-8">
                         <div class="flex items-center gap-x-2">
                             <input type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" x-model="form.is_commission_percentage" value="no">
                             <label  class="block text-sm font-medium leading-6 text-gray-900">$</label>
@@ -157,7 +168,7 @@
                                     <span class="font-bold">Commission:</span>
                                 </div>
                                 <div class="col">
-                                    <span x-money.en-US.USD.decimal="'-' + form.commission"></span>
+                                    <span x-money.en-US.USD.decimal="'-' + fees.commission"></span>
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 mb-4 items-center">
@@ -313,6 +324,7 @@
             }
             let netSheet = function(){
                 return {
+                    feesPaidBy: 'seller',
                     funds_to_seller: '',
                     fees: {},
                     hasProcessed: false,
@@ -347,13 +359,23 @@
                             this.fees = await response.json();
                             this.form.title_fee = this.fees.title_insurance;
                             let sum = 0;
-
+                            let sellerFees = 0;
                             // iterate over each item in the array
                             for (let i = 0; i < this.fees.other_fees.length; i++ ) {
-                                sum += parseFloat(this.fees.other_fees[i].fee_amount);
+                                if(this.feesPaidBy === 'buyer'){
+                                    sum += parseFloat(0);
+                                    this.fees.other_fees[i].fee_amount = 0;
+                                }else if(this.feesPaidBy === 'split'){
+                                    sum += parseFloat(this.fees.other_fees[i].fee_amount) / 2;
+                                    this.fees.other_fees[i].fee_amount = this.fees.other_fees[i].fee_amount / 2;
+                                }else{
+                                    sum += parseFloat(this.fees.other_fees[i].fee_amount);
+                                }
+                            
                             }
                             console.log(this.fees);
                             this.form.total_other_fees = sum;
+                            
                             this.totalFees = parseFloat(this.form.title_fee) + parseFloat(this.form.total_other_fees) + parseFloat(this.fees.commission) + parseFloat(this.fees.taxes);
                             this.funds_to_seller = parseFloat(this.form.price) - (parseFloat(this.totalFees) + parseFloat(this.form.loan_balance));
                             this.hasProcessed = true;
