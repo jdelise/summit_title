@@ -28,10 +28,11 @@
     </div>
     <!-- End Hero -->
     <div class="lg:px-8 max-w-3xl mx-auto pb-20 px-4 sm:px-6 space-y-8 mt-10">
-        <form x-data="{
-
-        }" 
+        <form 
+        method="POST" 
+        action="{{route('order_title_work_post')}}"
         class="border border-gray-300 p-6 rounded-lg shadow-xl">
+        @csrf
                 <input type="hidden" id="street_number" name="street_number"/>
                 <input type="hidden" id="route" name="route"/>
                 <input type="hidden" id="unit" name="unit"/>

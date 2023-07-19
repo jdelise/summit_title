@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('pages.home');
 })->name('home');
+Route::get('/success', function () {
+    return view('pages.success');
+})->name('success');
 Route::get('/test-home', function () {
     return view('test.test_home');
 });
@@ -41,6 +44,7 @@ Route::get('oder_title_work',[PagesController::class, 'oder_title_work'])->name(
 Route::get('services',[PagesController::class, 'services'])->name('services');
 Route::get('location', [PagesController::class, 'location'])->name('location');
 Route::get('order_title_work', [PagesController::class,'order_title_work'])->name('order_title_work');
+Route::post('order_title_work', [PagesController::class,'proccess_title_work'])->name('order_title_work_post');
 Route::get('contact', [PagesController::class,'contact'])->name('contact');
 
 

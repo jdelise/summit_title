@@ -29,6 +29,8 @@ class PagesController extends Controller
     {
         return view('pages.contact');
     }
-
+    function proccess_title_work() {
+        return view('pages.success');
+    }
 
 }

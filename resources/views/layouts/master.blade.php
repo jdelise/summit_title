@@ -37,7 +37,6 @@
     <span x-text="message" class="pr-4"></span>
     <button x-on:click="show = false">&times;</button>
 </div>
-
 </body>
 
 
