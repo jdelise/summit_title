@@ -33,8 +33,8 @@
         <div id="map">
 
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-5">
-            <div class="sm:col-span-3">
+        <div class="flex flex-col md:flex-row">
+            <div class="md:w-2/3">
                 <p>
                     We’d love to hear from you. Whether you have a question about our services, need assistance or just want to talk, we're here for you. Please use the contact information or form below to reach out to us.
                 </p>
@@ -105,8 +105,31 @@
                     </form>
                 </div>
             </div>
-            <div class="sm:col-span-2 sm:pl-8">
-                Test
+            <div class="md:w-1/3 flex flex-col space-y-6 md:pl-10">
+                <div class="flex flex-row space-y4">
+                    <div class="border flex flex-col p-4 rounded-lg shadow-lg w-full">
+                        <span class="font-bold mb-2 text-lg">Address:</span>
+                        <span>
+                            11550 N Meridian St #235<br>
+                            Carmel, IN 46032
+                        </span>
+                        <span class="font-bold my-2 text-lg">Hours:</span>
+                        <span>
+                            Monday–Friday<br>
+                            8:30am–5pm
+                        </span>
+                        <span class="font-bold my-2 text-lg">Phone:</span>
+                        <span>
+                            <a href="tel:3176692359">(317) 669-2359</a>
+                        </span>
+                    </div>
+                </div>
+                <div class="flex flex-row space-y4">
+
+                </div>
+                <div class="flex flex-row space-y4">
+
+                </div>
             </div>
         </div>
     </div>
