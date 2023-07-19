@@ -15,7 +15,7 @@ class PagesController extends Controller
         return redirect('');
     }
     function order_title_work() {
-
+        return view('pages.order_title_work');
     }
     public function services()
     {
@@ -29,4 +29,6 @@ class PagesController extends Controller
     {
         return view('pages.contact');
     }
+
+
 }

@@ -40,7 +40,7 @@ Route::get('seller-net-sheet', [\App\Http\Controllers\SellerNetsheet::class, 'in
 Route::get('oder_title_work',[PagesController::class, 'oder_title_work'])->name('oder_title_work');
 Route::get('services',[PagesController::class, 'services'])->name('services');
 Route::get('location', [PagesController::class, 'location'])->name('location');
-Route::get('order_title_work', [PagesController::class,'oder_title_work'])->name('order_title_work');
+Route::get('order_title_work', [PagesController::class,'order_title_work'])->name('order_title_work');
 Route::get('contact', [PagesController::class,'contact'])->name('contact');
 
 

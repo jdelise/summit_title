@@ -37,11 +37,18 @@
     <span x-text="message" class="pr-4"></span>
     <button x-on:click="show = false">&times;</button>
 </div>
+
 </body>
+
 
    @yield('scripts')
 
+   
+  
+
+
    <script>
+    
     function flash(message, type){
         window.dispatchEvent(new CustomEvent('flash',{
             detail: {
