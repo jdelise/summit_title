@@ -10,7 +10,7 @@
    <div class="flex flex-col items-center justify-center min-h-[400px] mx-auto w-full">
      <div class="bg-green-600 md:text-left p-10 rounded-lg shadow-lg text-center text-white w-1/2">
         <h2 class="mb-4 md:text-4xl text-2xl">Success!</h2>
-        <p>We have received your request and will be in contact soon.</p>
+        <p>Thank you for reaching out to us. We have successfully received your information and a member of our team will respond to your inquiry promptly.</p>
         <a href="{{route('home')}}" class="border hover:text-black inline-flex mt-4 p-2 px-4 hover:bg-white">Home</a>
      </div>
    </div>
