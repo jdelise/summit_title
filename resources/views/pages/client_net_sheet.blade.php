@@ -33,8 +33,8 @@
         </div>
         <!-- End Hero -->
         <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 pb-20 space-y-8" x-data="netSheet()">
-            <div class="grid grid-cols-2">
-                <div class="bg-white border md:p-10 mt-5 p-4 relative rounded-xl shadow-xl sm:mt-10 z-10" >
+            <div class="flex flex-col md:flex-row">
+                <div class="bg-white border md:p-10 mt-5 p-4 relative rounded-xl shadow-xl sm:mt-10 z-10 md:w-1/2" >
                     <div class="mb-4 sm:mb-8">
                         <label class="block mb-2 text-sm font-medium">Purchase Price:</label>
                         <div class="relative mt-2 rounded-md shadow-sm">
@@ -85,12 +85,12 @@
                         </div>
                     </div>
                 </div>
-                <div x-show="hasProcessed" class="bg-white border md:p-10 mt-5 p-4 relative rounded-xl shadow-xl sm:mt-10 z-10 ml-4">
+                <div x-show="hasProcessed" class="bg-white border md:p-10 mt-5 p-4 relative rounded-xl shadow-xl sm:mt-10 z-10 ml-4 md:w-1/2">
                     <div class="border grid grid-cols-2 p-5 rounded">
 
                         <div class="col-md-4">
-                            <h4 class="text-2xl text-blue-500">Seller's Proceeds</h4>
-                            <h3 x-money.en-US.USD.decimal="funds_to_seller" class="text-3xl text-green-700"></h3>
+                            <h4 class="text-lg md:text-2xl text-blue-500">Seller's Proceeds</h4>
+                            <h3 x-money.en-US.USD.decimal="funds_to_seller" class="text-xl md:text-3xl text-green-700"></h3>
                             <span class="text-sm">Net At Close</span>
                         </div>
                         <div class="border-left col-md-8 text-right">
@@ -130,8 +130,8 @@
                     </div>
                     <div class="border grid grid-cols-2 p-5 rounded mt-4">
                         <div class="col-md-4">
-                            <h3 class="text-2xl text-blue-500">Total Closing Costs</h3>
-                            <h3 x-money.en-US.USD.decimal="totalFees" class="text-3xl text-red-700"></h3>
+                            <h3 class="text-lg md:text-2xl text-blue-500">Total Closing Costs</h3>
+                            <h3 x-money.en-US.USD.decimal="totalFees" class="text-xl md:text-3xl text-red-700"></h3>
                         </div>
                         <div class="border-left col-md-8 text-right">
                             <div class="grid grid-cols-2 mb-4 items-center">
