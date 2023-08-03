@@ -14,9 +14,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $script = getcwd().'/database/seeders/db_backup.sql';
-        $username = Config::get('database.connections.mysql.username');
-        $password = Config::get('database.connections.mysql.password');
-        $database = Config::get('database.connections.mysql.database');
+        $username = config('database.connections.mysql.username');
+        $password = config('database.connections.mysql.password');
+        $database = config('database.connections.mysql.database');
 
         $command = "mysql -u $username -p$password $database < $script";
 
