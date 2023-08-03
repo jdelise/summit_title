@@ -10,7 +10,7 @@
         <!-- Hero -->
         <div class="">
             <div class="bg-gradient-to-b from-blue-500/[.75] to-black">
-                <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
                     <!-- Title -->
                     <div class="">
@@ -33,7 +33,7 @@
             </div>
         </div>
         <!-- End Hero -->
-        <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 pb-20 space-y-8" x-data="netSheet()">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 space-y-8" x-data="netSheet()">
             <div class="flex flex-col md:flex-row">
                 <div class="bg-white border md:p-10 mt-5 p-4 relative rounded-xl shadow-xl sm:mt-10 z-10 md:w-1/2" >
                     <div class="mb-4 sm:mb-8">

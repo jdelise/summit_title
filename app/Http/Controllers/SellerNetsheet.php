@@ -138,10 +138,10 @@ class SellerNetsheet extends Controller
         $trans_type = '';
         if ($fee_type === 'buyer_cash'){
             $trans_type = 'Buyer Fee - Cash';
-        }elseif ($fee_type === 'seller_fee'){
-            $trans_type = 'Seller - Fee';
-        }else{
+        }elseif ($fee_type === 'Buyer Fee - Mortgage'){
             $trans_type = 'Buyer Fee - Mortgage';
+        }else{
+            $trans_type = 'Seller - Fee';
         }
 
 

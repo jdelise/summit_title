@@ -7,14 +7,16 @@ use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
-    function index($name) {
+    function index($name)
+    {
 
-        if(View()->exists('pages.'. $name)){
+        if (View()->exists('pages.' . $name)) {
             return view('pages.' . $name);
         }
         return redirect('');
     }
-    function order_title_work() {
+    function order_title_work()
+    {
         return view('pages.order_title_work');
     }
     public function services()
@@ -23,14 +25,13 @@ class PagesController extends Controller
     }
     public function location()
     {
-
     }
     public function contact()
     {
         return view('pages.contact');
     }
-    function proccess_title_work() {
+    function proccess_title_work()
+    {
         return view('pages.success');
     }
-
 }

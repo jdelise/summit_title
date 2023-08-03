@@ -10,7 +10,7 @@
     <!-- Hero -->
     <div class="">
         <div class="bg-gradient-to-br from-blue-600 to-black">
-            <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
                 <!-- Title -->
                 <div class="">
@@ -68,20 +68,16 @@
 
                         </div>
                         <div class="mb-4 sm:mb-8">
+                            
                             <label class="block mb-2 text-sm font-medium">Email:</label>
-                            <input type="text"
-                                   class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
-                                   x-model="form.email"
-                                   placeholder="Please enter your email address"
-                            >
 
                         </div>
                         <div class="mb-4 sm:mb-8">
                             <label class="block mb-2 text-sm font-medium">Phone:</label>
-                            <input type="text"
+                            <input type="number"
                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                                    x-model="form.phone"
-                                   placeholder="Please the best number to reach you"
+                                   placeholder="(555) 000-0000"
                             >
 
                         </div>
