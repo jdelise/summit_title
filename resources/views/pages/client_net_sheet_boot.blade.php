@@ -312,7 +312,7 @@
             myModal.show();
         }*/
     </script>
-   {{-- <script
+   <script
         src="https://maps.googleapis.com/maps/api/js?&libraries=places&key=AIzaSyB7Abs3JTCXWOlXBuiu42HMgM_KE9LPdio"></script>
     <script>
         const formatter = new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'});
@@ -385,5 +385,5 @@
 
         // [END region_geolocation]
         google.maps.event.addDomListener(window, 'load', initialize);
-    </script>--}}
+    </script>
 @endsection

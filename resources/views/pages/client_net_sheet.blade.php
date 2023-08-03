@@ -3,8 +3,6 @@
     @section('styles')
         <script defer src="https://unpkg.com/alpinejs-money@latest/dist/money.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
-
     @endsection
     @section('content')
         <!-- Hero -->
@@ -16,16 +14,13 @@
                     <div class="">
                         <h1 class="block font-thin text-3xl md:text-5xl text-gray-200">
                             Seller's Estimated Net Sheet
-                        </h1>{{--
-                    <h3 class="block font-medium text-gray-200 text-3xl sm:text-3xl md:text-4xl lg:text-5xl mt-6">
-                        Elevating Your Real Estate Success
-                    </h3>--}}
+                        </h1>
                     </div>
                     <!-- End Title -->
 
                     <div class="">
                         <p class="italic text-gray-300 text-lg">
-                            An easy, straightforward way to estimate your closing costs.
+                            An easy, straightforward way to estimate your net proceeds.
                         </p>
                     </div>
                 </div>
@@ -63,7 +58,7 @@
 
                     </div>
                     <div class="mb-4 sm:mb-8">
-                        <label class="block mb-2 text-sm font-medium">Closing Fees Paid By:</label>
+                        <label class="block mb-2 text-sm font-medium">Closing Fee Paid By:</label>
                         <div class="flex items-center gap-x-2">
                             <input type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" x-model="feesPaidBy" value="seller">
                             <label  class="block text-sm font-medium leading-6 text-gray-900">Seller</label>
@@ -363,7 +358,8 @@
                             let sellerFees = 0;
                             // iterate over each item in the array
                             for (let i = 0; i < this.fees.other_fees.length; i++ ) {
-                                if(this.feesPaidBy === 'buyer'){
+                                if(this.fees.other_fees[i].fee_name === 'Closing Fee'){
+                                    if(this.feesPaidBy === 'buyer'){
                                     sum += parseFloat(0);
                                     this.fees.other_fees[i].fee_amount = 0;
                                 }else if(this.feesPaidBy === 'split'){
@@ -372,7 +368,8 @@
                                 }else{
                                     sum += parseFloat(this.fees.other_fees[i].fee_amount);
                                 }
-                            
+                                }
+                                
                             }
                             console.log(this.fees);
                             this.form.total_other_fees = sum;

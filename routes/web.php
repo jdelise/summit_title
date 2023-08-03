@@ -3,6 +3,7 @@
 use App\Helpers\UploadHelper;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TestingController;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,10 @@ Route::get('location', [PagesController::class, 'location'])->name('location');
 Route::get('order_title_work', [PagesController::class,'order_title_work'])->name('order_title_work');
 Route::post('order_title_work', [PagesController::class,'proccess_title_work'])->name('order_title_work_post');
 Route::get('contact', [PagesController::class,'contact'])->name('contact');
+
+
+
+Route::get('dump_database', [TestingController::class,'dumpDatabase']);
 
 
 Route::get('/admin', function () {

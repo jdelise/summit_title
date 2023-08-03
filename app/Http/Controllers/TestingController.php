@@ -6,6 +6,7 @@ use App\Helpers\UploadHelper;
 use App\Models\StandardFee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class TestingController extends Controller
 {
@@ -23,6 +24,22 @@ class TestingController extends Controller
             $standardFee->save();
 
         }
+
+    }
+    public function dumpDatabase()
+    {
+
+        $script = getcwd().'/database/dbdump.sql';
+        $username = config('database.connections.mysql.username');
+        $password = config('database.connections.mysql.password');
+        $database = config('database.connections.mysql.database');
+        $file_name = 'db_backup.sql';
+        //dd(base_path('public/' . $file_name));
+        $command = "mysqldump -u $username -p$password $database > $file_name";
+
+        exec($command);
+        Storage::move(base_path('database/seeders/' . $file_name), 'downloads/' . $file_name);
+        //\Illuminate\Support\Facades\DB::unprepared(file_get_contents(base_path()."/public/dbdump.sql"));
 
     }
 }
