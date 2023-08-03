@@ -53,6 +53,17 @@
                     </div>
                     <div class="mb-4 sm:mb-8">
 
+                        <label class="block mb-2 text-sm font-medium">Other Expenses (e.g. HOA fees, inspection consessions):</label>
+                        <div class="relative mt-2 rounded-md shadow-sm">
+                            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                <span class="text-gray-500 sm:text-sm">$</span>
+                            </div>
+                            <input type="text" class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"  x-model.number="form.other_expenses" placeholder="0.00">
+                        </div>
+
+                    </div>
+                    <div class="mb-4 sm:mb-8">
+
                         <label class="block mb-2 text-sm font-medium">Closing Date:</label>
                         <input type="text" class="py-3  px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 flatPicker"  x-model="form.closing_date" >
 
@@ -60,11 +71,11 @@
                     <div class="mb-4 sm:mb-8">
                         <label class="block mb-2 text-sm font-medium">Closing Fee Paid By:</label>
                         <div class="flex items-center gap-x-2">
-                            <input type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" x-model="feesPaidBy" value="seller">
+                            <input type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" x-model="form.feesPaidBy" value="seller">
                             <label  class="block text-sm font-medium leading-6 text-gray-900">Seller</label>
-                            <input  type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" x-model="feesPaidBy" value="split">
+                            <input  type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" x-model="form.feesPaidBy" value="split">
                             <label  class="block text-sm font-medium leading-6 text-gray-900">Split</label>
-                            <input  type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" x-model="feesPaidBy" value="buyer">
+                            <input  type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" x-model="form.feesPaidBy" value="buyer">
                             <label  class="block text-sm font-medium leading-6 text-gray-900">Buyer</label>
                         </div>
                     </div>
@@ -75,8 +86,10 @@
                             <input  type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" x-model="form.is_commission_percentage" value="yes">
                             <label  class="block text-sm font-medium leading-6 text-gray-900">%</label>
                         </div>
-                        <label class="block mb-2 text-sm font-medium">Commission:</label>
-                        <input type="text" class="py-3  px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"  x-model.number="form.commission" >
+                        <label class="block mb-2 text-sm font-medium">Listing Office Commission:</label>
+                        <input type="text" class="py-3  px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"  x-model.number="form.sellerCommission" >
+                        <label class="block my-2 text-sm font-medium">Buyer Agent Commission:</label>
+                        <input type="text" class="py-3  px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"  x-model.number="form.buyerCommission" >
                     </div>
                     <div class="mb-4 sm:mb-8">
                         <div class="flex items-center gap-x-2">
@@ -137,7 +150,7 @@
                     </div>
                     <div class="border grid grid-cols-2 p-5 rounded mt-4">
                         <div class="col-md-4">
-                            <h3 class="text-lg md:text-2xl text-blue-500">Total Closing Costs</h3>
+                            <h3 class="text-lg md:text-2xl text-blue-500 pr-4">Total Closing Costs</h3>
                             <h3 x-money.en-US.USD.decimal="totalFees" class="text-xl md:text-3xl text-red-700"></h3>
                         </div>
                         <div class="border-left col-md-8 text-right">
@@ -161,10 +174,18 @@
                             </template>
                             <div class="grid grid-cols-2 mb-4 items-center">
                                 <div class="col text-left">
-                                    <span class="font-bold">Commission:</span>
+                                    <span class="font-bold">Listing Office Commission:</span>
                                 </div>
                                 <div class="col">
-                                    <span x-money.en-US.USD.decimal="'-' + fees.commission"></span>
+                                    <span x-money.en-US.USD.decimal="'-' + fees.sellerCommission"></span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 mb-4 items-center">
+                                <div class="col text-left">
+                                    <span class="font-bold">Buyer Agent Commission:</span>
+                                </div>
+                                <div class="col">
+                                    <span x-money.en-US.USD.decimal="'-' + fees.buyerCommission"></span>
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 mb-4 items-center">
@@ -320,20 +341,22 @@
             }
             let netSheet = function(){
                 return {
-                    feesPaidBy: 'seller',
                     funds_to_seller: '',
                     fees: {},
                     hasProcessed: false,
                     savedDataName: 'Seller Net Sheet',
                     totalFees: '',
                     form: {
+                        feesPaidBy: 'seller',
                         price: '',
                         loan_balance: '0.00',
-                        commission: '6',
+                        other_expenses: '0.00',
+                        buyerCommission: '3',
+                        sellerCommission: '3',
                         taxes: '0.00',
                         title_fee: '',
                         total_other_fees: '',
-                        transaction_type: 'purchase',
+                        fee_type: '',
                         is_taxes_percentage: 'no',
                         is_commission_percentage: 'yes',
                         closing_date: ''
@@ -357,25 +380,32 @@
                             let sum = 0;
                             let sellerFees = 0;
                             // iterate over each item in the array
+                            
                             for (let i = 0; i < this.fees.other_fees.length; i++ ) {
-                                if(this.fees.other_fees[i].fee_name === 'Closing Fee'){
-                                    if(this.feesPaidBy === 'buyer'){
-                                    sum += parseFloat(0);
-                                    this.fees.other_fees[i].fee_amount = 0;
-                                }else if(this.feesPaidBy === 'split'){
-                                    sum += parseFloat(this.fees.other_fees[i].fee_amount) / 2;
-                                    this.fees.other_fees[i].fee_amount = this.fees.other_fees[i].fee_amount / 2;
+                               
+                                if(this.form.feesPaidBy === 'buyer'){
+                                    if(this.fees.other_fees[i].fee_name === 'Closing Fee'){
+                                        this.fees.other_fees[i].fee_amount = parseFloat(0);
+                                        sum += parseFloat(0);
+                                    }else{
+                                        sum += parseFloat(this.fees.other_fees[i].fee_amount);
+                                    }
+                                }else if(this.form.feesPaidBy === 'split'){
+                                    if(this.fees.other_fees[i].fee_name === 'Closing Fee'){
+                                        sum += parseFloat(this.fees.other_fees[i].fee_amount / 2);
+                                        this.fees.other_fees[i].fee_amount = parseFloat(this.fees.other_fees[i].fee_amount / 2);
+                                    }else{
+                                        sum += parseFloat(this.fees.other_fees[i].fee_amount);
+                                    }
                                 }else{
                                     sum += parseFloat(this.fees.other_fees[i].fee_amount);
                                 }
-                                }
-                                
                             }
                             console.log(this.fees);
                             this.form.total_other_fees = sum;
                             
-                            this.totalFees = parseFloat(this.form.title_fee) + parseFloat(this.form.total_other_fees) + parseFloat(this.fees.commission) + parseFloat(this.fees.taxes);
-                            this.funds_to_seller = parseFloat(this.form.price) - (parseFloat(this.totalFees) + parseFloat(this.form.loan_balance));
+                            this.totalFees = parseFloat(this.form.title_fee) + parseFloat(this.form.total_other_fees) + parseFloat(this.fees.taxes) + (parseFloat(this.fees.sellerCommission) + parseFloat(this.fees.buyerCommission));
+                            this.funds_to_seller = (parseFloat(this.form.price) - (parseFloat(this.totalFees)) + parseFloat(this.form.loan_balance));
                             this.hasProcessed = true;
                             await this.submitData();
                         }else{

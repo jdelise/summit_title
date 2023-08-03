@@ -23,12 +23,14 @@ class SellerNetsheet extends Controller
     function calculateFees(Request $request) {
         $data = array();
         $data['request'] = $request->all();
-        $data['title_insurance'] = $this->getTitlePremium($request->price,$request->transaction_type);
+        $data['title_insurance'] = $this->getTitlePremium($request->price);
 
         if($request->is_commission_percentage === 'yes'){
-            $data['commission'] = $this->calculateCommission($request->price, $request->commission);
+            $data['buyerCommission'] = $this->calculateCommission($request->price, $request->buyerCommission);
+            $data['sellerCommission'] = $this->calculateCommission($request->price, $request->sellerCommission);
         }else{
-            $data['commission'] = $request->commission;
+            $data['buyerCommission'] = $request->commission;
+            $data['sellerCommission'] = $request->commission;
         }
 
         if($request->is_taxes_percentage === 'no'){
@@ -39,8 +41,37 @@ class SellerNetsheet extends Controller
         }
         $data['other_debts'] = 0;
         $data['other_fees'] = $this->getOtherFees($request->fee_type);
-
         return $data;
+    }
+    public function getClosingFee($paid_by, $fees)
+    {
+        foreach($fees as $fee){
+            if($fee->fee_name === 'Closing Fee'){
+                dd($fee);
+            }
+        }
+       
+        $closing_fee = $fees->where('fee_name','Closing Fee')->first();
+        if ($paid_by === 'seller'){
+            return number_format($closing_fee->fee_amount,2);
+        }elseif ($paid_by === 'split'){
+            return number_format($closing_fee->fee_amount / 2, 2);
+        }
+        return 0;
+    }
+    public function getOtherFees($fee_type)
+    {
+        $trans_type = '';
+        if ($fee_type === 'buyer_cash'){
+            $trans_type = 'Buyer Fee - Cash';
+        }elseif ($fee_type === 'Buyer Fee - Mortgage'){
+            $trans_type = 'Buyer Fee - Mortgage';
+        }else{
+            $trans_type = 'Seller - Fee';
+        }
+
+        return StandardFee::select(['fee_name','fee_amount','fee_category'])->where('fee_category', $trans_type)->get();
+        
     }
     function saveSellersNetSheet(Request $request) {
         $netsheet = new NetSheet;
@@ -64,7 +95,7 @@ class SellerNetsheet extends Controller
         $netsheet->save();
         return $netsheet;
     }
-    public function getTitlePremium($price , $transaction_type)
+    public function getTitlePremium($price , $transaction_type = 'Purchase')
     {
         $fees = TitleFee::where('transaction_type', $transaction_type)->get();
         $returnPrice = 0;
@@ -77,16 +108,7 @@ class SellerNetsheet extends Controller
         }
         return $returnPrice;
     }
-    public function getClosingFee($paid_by, $fees)
-    {
-        $closing_fee = $fees->where('fee_name','Closing Fee')->first();
-        if ($paid_by === 'seller'){
-            return number_format($closing_fee->fee_amount,2);
-        }elseif ($paid_by === 'split'){
-            return number_format($closing_fee->fee_amount / 2, 2);
-        }
-        return 0;
-    }
+    
 
     public function estimateTaxes($prior_year_tax,$closing_date)
     {
@@ -133,18 +155,5 @@ class SellerNetsheet extends Controller
         return ($purchasePrice / 100) * $rate;
 
     }
-    public function getOtherFees($fee_type)
-    {
-        $trans_type = '';
-        if ($fee_type === 'buyer_cash'){
-            $trans_type = 'Buyer Fee - Cash';
-        }elseif ($fee_type === 'Buyer Fee - Mortgage'){
-            $trans_type = 'Buyer Fee - Mortgage';
-        }else{
-            $trans_type = 'Seller - Fee';
-        }
-
-
-        return StandardFee::select(['fee_name','fee_amount','fee_category'])->where('fee_category', $trans_type)->get();
-    }
+    
 }
