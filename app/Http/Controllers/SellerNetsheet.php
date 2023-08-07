@@ -29,8 +29,8 @@ class SellerNetsheet extends Controller
             $data['buyerCommission'] = $this->calculateCommission($request->price, $request->buyerCommission);
             $data['sellerCommission'] = $this->calculateCommission($request->price, $request->sellerCommission);
         }else{
-            $data['buyerCommission'] = $request->commission;
-            $data['sellerCommission'] = $request->commission;
+            $data['buyerCommission'] = $request->buyerCommission;
+            $data['sellerCommission'] = $request->sellerCommission;
         }
 
         if($request->is_taxes_percentage === 'no'){

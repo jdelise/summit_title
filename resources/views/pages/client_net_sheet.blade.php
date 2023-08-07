@@ -169,14 +169,7 @@
                                     <span x-money.en-US.USD.decimal="totalFees"></span>
                                 </div>
                             </div>
-                            <div class="grid grid-cols-2 mb-4 items-center">
-                                <div class="col text-left">
-                                    <span class="font-bold">Other Expenses:</span>
-                                </div>
-                                <div class="col">
-                                    <span x-money.en-US.USD.decimal="'-' + fees.other_expenses"></span>
-                                </div>
-                            </div>
+                            
                             <div class="grid grid-cols-2 mb-4 items-center">
                                 <div class="col text-left">
                                     <span class="font-bold">Net:</span>
@@ -189,7 +182,7 @@
                     </div>
                     <div class="border grid grid-cols-2 p-5 rounded mt-4">
                         <div class="col-md-4">
-                            <h3 class="text-lg md:text-2xl text-blue-500 pr-4">Total Closing Costs</h3>
+                            <h3 class="text-lg md:text-2xl text-blue-500 pr-4">Total Seller Closing Fees</h3>
                             <h3 x-money.en-US.USD.decimal="totalFees" class="text-xl md:text-3xl text-red-700"></h3>
                         </div>
                         <div class="border-left col-md-8 text-right">
@@ -211,7 +204,14 @@
                                     </div>
                                 </div>
                             </template>
-
+                            <div class="grid grid-cols-2 mb-4 items-center">
+                                <div class="col text-left">
+                                    <span class="font-bold">Other Expenses:</span>
+                                </div>
+                                <div class="col">
+                                    <span x-money.en-US.USD.decimal="'-' + fees.other_expenses"></span>
+                                </div>
+                            </div>
                             <div class="grid grid-cols-2 mb-4 items-center">
                                 <div class="col text-left">
                                     <span class="font-bold">Listing Office Commission:</span>
@@ -404,7 +404,6 @@
                     funds_to_seller: '',
                     fees: {},
                     hasProcessed: false,
-                    savedDataName: 'Seller Net Sheet',
                     totalFees: '',
                     form: {
                         feesPaidBy: 'seller',
@@ -475,9 +474,8 @@
 
                             this.totalFees = parseFloat(this.form.title_fee) + parseFloat(this.form.total_other_fees) +
                                 parseFloat(this.fees.taxes) + (parseFloat(this.fees.sellerCommission) + parseFloat(this
-                                    .fees.buyerCommission));
-                            this.funds_to_seller = ((parseFloat(this.form.price) - parseFloat(this.form.loan_balance)) -
-                                parseFloat(this.fees.other_expenses)) - (parseFloat(this.totalFees));
+                                    .fees.buyerCommission) + parseFloat(this.fees.other_expenses));
+                            this.funds_to_seller = (parseFloat(this.form.price) - parseFloat(this.form.loan_balance)) - parseFloat(this.totalFees);
                             this.hasProcessed = true;
                             await this.submitData();
                         } else {
@@ -499,7 +497,7 @@
                                 'X-CSRF-TOKEN': document.head.querySelector('meta[name=csrf-token]').content
                             },
                             body: JSON.stringify({
-                                name: this.savedDataName,
+                                name: this.form.street_number + ' ' + this.form.route,
                                 body: {
                                     form: this.form,
                                     funds_to_seller: this.funds_to_seller,

@@ -22,6 +22,7 @@
     </div>
 
    <h1 style="text-align: center">{{$netsheet->name}}</h1>
+   <h1 style="text-align: center">Estimated Seller's Proceeds</h1>
     <div style="border: 1px solid #ddd; border-radius: 20px; padding: 20px">
         <h3 style="margin: 0; padding: 0">Estimated Proceeds: ${{number_format($data->funds_to_seller)}}<span></span></h3>
         <hr>
@@ -38,7 +39,9 @@
         @foreach($data->fees->other_fees as $other_fee)
             <h4 style="margin: 0">{{$other_fee->fee_name}}: <span>${{number_format($other_fee->fee_amount)}}</span></h4>
         @endforeach
-        <h4 style="margin: 0">Commission: <span>${{number_format($data->fees->commission)}}</span></h4>
+        <h4 style="margin: 0">Other Fees: <span>${{number_format($data->fees->other_expenses)}}</span></h4>
+        <h4 style="margin: 0">Listing Office Commission: <span>${{number_format($data->fees->sellerCommission)}}</span></h4>
+        <h4 style="margin: 0">Buyer Agent Commission: <span>${{number_format($data->fees->buyerCommission)}}</span></h4>
         <h4 style="margin: 0">Taxes: <span>${{number_format($data->fees->taxes)}}</span></h4>
     </div>
     <div style="font-size: 10px; margin: 30px auto">
