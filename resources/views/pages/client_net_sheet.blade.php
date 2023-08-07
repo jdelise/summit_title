@@ -64,7 +64,7 @@
                     <div class="mb-4 sm:mb-8">
 
                         <label class="block mb-2 text-sm font-medium">Other Expenses (e.g. HOA fees, inspection
-                            consessions):</label>
+                            concessions):</label>
                         <div class="relative mt-2 rounded-md shadow-sm">
                             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                 <span class="text-gray-500 sm:text-sm">$</span>
