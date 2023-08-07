@@ -585,32 +585,10 @@
                                 var val = place.address_components[i][componentForm[addressType]];
                                 console.log(addressType, val);
                                 this.form[addressType] = val;
-                                // jQuery('#' + addressType).val(val);
 
                             }
                         }
                             });
-                        // When the user selects an address from the dropdown,
-                        // populate the address fields in the form.
-                        /* window.dispatchEvent(new Event('autocomplete'));
-                        google.maps.event.addListener(autocomplete, 'place_changed', function() {
-                            this.fillInAddress;
-                        }); */
-                    },
-                    fillInAddress() {
-                        
-                        // HSOverlay.open(document.getElementById('hs-modal'));
-
-                    },
-                    geolocate() {
-                        if (navigator.geolocation) {
-                            navigator.geolocation.getCurrentPosition(function(position) {
-                                var geolocation = new google.maps.LatLng(
-                                    position.coords.latitude, position.coords.longitude);
-                                autocomplete.setBounds(new google.maps.LatLngBounds(geolocation,
-                                    geolocation));
-                            });
-                        }
                     }
                 }
             };
