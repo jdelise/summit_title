@@ -39,7 +39,7 @@ class SellerNetsheet extends Controller
             $taxes = ($request->price / 100) * $request->taxes;
             $data['taxes'] = $this->estimateTaxes($taxes, $request->closing_date);
         }
-        $data['other_debts'] = 0;
+        $data['other_expenses'] = $request->other_expenses;
         $data['other_fees'] = $this->getOtherFees($request->fee_type);
         return $data;
     }
