@@ -401,6 +401,7 @@
             }
             let netSheet = function() {
                 return {
+                    savedDataName: '',
                     funds_to_seller: '',
                     fees: {},
                     hasProcessed: false,

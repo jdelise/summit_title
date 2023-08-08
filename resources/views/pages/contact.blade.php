@@ -70,7 +70,11 @@
                         <div class="mb-4 sm:mb-8">
                             
                             <label class="block mb-2 text-sm font-medium">Email:</label>
-
+                            <input type="email"
+                                   class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                                   x-model="form.email"
+                                   placeholder="your-email@email.com"
+                            >
                         </div>
                         <div class="mb-4 sm:mb-8">
                             <label class="block mb-2 text-sm font-medium">Phone:</label>
