@@ -16,12 +16,14 @@
     $data = json_decode($netsheet->data);
     $date = \Carbon\Carbon::parse($data->form->closing_date);
     @endphp
-    {{--{{dd($data)}}--}}
+   
     <div style="width: 126px; margin: 0 auto">
         <img src="{{url('/')}}/images/summit_title_bw_logo.png" alt="" style="width: 100%;">
     </div>
 
-   <h1 style="text-align: center">{{$netsheet->name}}</h1>
+   <h1 style="text-align: center">{{$data->form->street_number}} {{$data->form->route}}<br>
+    {{$data->form->locality}} {{$data->form->administrative_area_level_1}}, {{$data->form->postal_code}}
+</h1>
    <h1 style="text-align: center">Estimated Seller's Proceeds</h1>
     <div style="border: 1px solid #ddd; border-radius: 20px; padding: 20px">
         <h3 style="margin: 0; padding: 0">Estimated Proceeds: ${{number_format($data->funds_to_seller), 2, '.', ','}}<span></span></h3>
