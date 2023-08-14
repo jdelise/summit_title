@@ -136,25 +136,46 @@ class SellerNetsheet extends Controller
         return $prior_year_taxes;
     } */
     public function estimateTaxes($prior_year_tax,$closing_date)
-    {
-        $dailyTax = number_format($prior_year_tax / 360, 2);
+    /* {
+        $dailyTax = number_format($prior_year_tax / 365, 2);
         $dt = Carbon::parse($closing_date);
         $starting_tax = Carbon::parse($dt->format('Y') - 1 . '/11/10');
         $first_tax = Carbon::parse($dt->format('Y') . '/05/10');
         $second_tax = Carbon::parse($dt->format('Y') . '/11/10');
         $last_tax = Carbon::parse($dt->format('Y') + 1 . '/05/10');
         //dd($last_tax);
-        $prior_year_taxes = 0;
+        $taxes_owed = 0;
 
         if($dt->between($starting_tax, $first_tax)){
-            $prior_year_taxes = ($dt->diffInDays($starting_tax) * $dailyTax) + $prior_year_tax;
+            $taxes_owed = ($dt->diffInDays($starting_tax) * $dailyTax) + $prior_year_tax;
         }elseif($dt->between($first_tax, $second_tax)){
-            $prior_year_taxes = ($prior_year_tax / 2) + ($dt->diffInDays($starting_tax) * $dailyTax);
+            $taxes_owed = ($prior_year_tax / 2) + ($dt->diffInDays($starting_tax) * $dailyTax);
         }elseif($dt->between($second_tax, $last_tax)){
-            $prior_year_taxes = $dt->diffInDays($starting_tax) * $dailyTax;
+            $taxes_owed = $dt->diffInDays($starting_tax) * $dailyTax;
         }
         //dd($prior_year_taxes);
-        return $prior_year_taxes;
+        return $taxes_owed;
+
+    } */
+    {
+        $dailyTax = number_format($prior_year_tax / 365, 2);
+        $dt = Carbon::parse($closing_date);
+        $starting_tax = Carbon::parse($dt->format('Y') . '/01/01');
+        $first_tax = Carbon::parse($dt->format('Y') . '/05/10');
+        $second_tax = Carbon::parse($dt->format('Y') . '/11/10');
+        $last_tax = Carbon::parse($dt->format('Y') + 1 . '/05/10');
+        //dd($last_tax);
+        $taxes_owed = 0;
+
+        if($dt->between($starting_tax, $first_tax)){
+            $taxes_owed = ($dt->diffInDays($starting_tax) * $dailyTax) + $prior_year_tax;
+        }elseif($dt->between($first_tax, $second_tax)){
+            $taxes_owed = ($prior_year_tax / 2) + ($dt->diffInDays($starting_tax) * $dailyTax);
+        }elseif($dt->between($second_tax, $last_tax)){
+            $taxes_owed = $dt->diffInDays($starting_tax) * $dailyTax;
+        }
+        //dd($prior_year_taxes);
+        return $taxes_owed;
 
     }
     public function calculateHoa($closing_date, $paidTimeFrame, $amount)
