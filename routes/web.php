@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\UploadHelper;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestingController;
@@ -61,15 +62,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/dashboard',[PagesController::class,'userDashboard']);
 });
-
 require __DIR__.'/auth.php';
 
-Route::get('/csv', [\App\Http\Controllers\TestingController::class, 'uploadCSV']);
+Route::get('/admin/dashboard', [AdminController::class, 'getDashboard']);
 
-Route::get('/dash', function () {
-    return view('admin.dashboard');
-});
+Route::get('/csv', [\App\Http\Controllers\TestingController::class, 'uploadCSV']);
 
 Route::get('/test', function () {
     $prior_year_tax = 3000;

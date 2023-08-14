@@ -33,12 +33,14 @@ class SellerNetsheet extends Controller
             $data['sellerCommission'] = $request->sellerCommission;
         }
 
-        if($request->is_taxes_percentage === 'no'){
-            $data['taxes'] = $this->estimateTaxes($request->taxes, $request->closing_date);
-        }else{
-            $taxes = ($request->price / 100) * $request->taxes;
-            $data['taxes'] = $this->estimateTaxes($taxes, $request->closing_date);
-        }
+       
+            if($request->is_taxes_percentage === 'no'){
+                $data['taxes'] = $this->estimateTaxes($request->taxes, $request->closing_date);
+            }else{
+                $taxes = ($request->price / 100) * $request->taxes;
+                $data['taxes'] = $this->estimateTaxes($taxes, $request->closing_date);
+            }
+        
         $data['other_expenses'] = $request->other_expenses;
         $data['other_fees'] = $this->getOtherFees($request->fee_type);
         return $data;
@@ -110,13 +112,15 @@ class SellerNetsheet extends Controller
     }
     
 
-    public function estimateTaxes($prior_year_tax,$closing_date)
+    /* public function estimateTaxes($prior_year_tax,$closing_date)
     {
 
         $dailyTax = number_format($prior_year_tax / 365, 2);
         $dt = Carbon::parse($closing_date);
         $first_tax = Carbon::parse($dt->format('Y') . '/05/10');
         $second_tax = Carbon::parse($dt->format('Y') . '/11/10');
+        $last_tax = Carbon::parse($dt->format('Y') + 1 . '/05/10');
+        dd($last_tax);
         $prior_year_taxes = 0;
         if ($dt->gt($first_tax)){
             if($dt->gt($second_tax)){
@@ -130,8 +134,29 @@ class SellerNetsheet extends Controller
         }
 
         return $prior_year_taxes;
-    }
+    } */
+    public function estimateTaxes($prior_year_tax,$closing_date)
+    {
+        $dailyTax = number_format($prior_year_tax / 360, 2);
+        $dt = Carbon::parse($closing_date);
+        $starting_tax = Carbon::parse($dt->format('Y') - 1 . '/11/10');
+        $first_tax = Carbon::parse($dt->format('Y') . '/05/10');
+        $second_tax = Carbon::parse($dt->format('Y') . '/11/10');
+        $last_tax = Carbon::parse($dt->format('Y') + 1 . '/05/10');
+        //dd($last_tax);
+        $prior_year_taxes = 0;
 
+        if($dt->between($starting_tax, $first_tax)){
+            $prior_year_taxes = ($dt->diffInDays($starting_tax) * $dailyTax) + $prior_year_tax;
+        }elseif($dt->between($first_tax, $second_tax)){
+            $prior_year_taxes = ($prior_year_tax / 2) + ($dt->diffInDays($starting_tax) * $dailyTax);
+        }elseif($dt->between($second_tax, $last_tax)){
+            $prior_year_taxes = $dt->diffInDays($starting_tax) * $dailyTax;
+        }
+        //dd($prior_year_taxes);
+        return $prior_year_taxes;
+
+    }
     public function calculateHoa($closing_date, $paidTimeFrame, $amount)
     {
         $dt = Carbon::parse($closing_date);

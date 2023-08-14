@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('seller_net_sheets', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id')->unsigned()->default(0);
             $table->text('name');
             $table->json('data');
             $table->timestamps();

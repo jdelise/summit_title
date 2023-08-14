@@ -34,4 +34,7 @@ class PagesController extends Controller
     {
         return view('pages.success');
     }
+    public function userDashboard() {
+        return view('pages.userDashboard');
+    }
 }

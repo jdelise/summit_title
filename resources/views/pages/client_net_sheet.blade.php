@@ -499,6 +499,7 @@
                             },
                             body: JSON.stringify({
                                 name: this.form.street_number + ' ' + this.form.route,
+                                user_id: 0,
                                 body: {
                                     form: this.form,
                                     funds_to_seller: this.funds_to_seller,

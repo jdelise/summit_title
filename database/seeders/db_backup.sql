@@ -135,6 +135,7 @@ DROP TABLE IF EXISTS `seller_net_sheets`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `seller_net_sheets` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned DEFAULT 0,
   `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `data` json NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
