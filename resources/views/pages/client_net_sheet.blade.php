@@ -285,6 +285,7 @@
 
                 </p>
             </div>
+            
             <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true" x-show="modal">
 
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
@@ -420,13 +421,13 @@
                         is_taxes_percentage: 'no',
                         is_commission_percentage: 'yes',
                         closing_date: '',
-                        street_number: '',
-                        route: '',
-                        postal_code: '',
-                        latitude: '',
-                        longitude: '',
-                        locality: '',
-                        administrative_area_level_1: ''
+                        street_number: 'No',
+                        route: 'Address Given',
+                        postal_code: '-',
+                        latitude: '-',
+                        longitude: '-',
+                        locality: '-',
+                        administrative_area_level_1: 'IN'
                     },
                     sumFees: function() {
                         const sumValues = obj => Object.values(this.fees.other_fees).reduce((a, b) => a + b.fee_amount,
