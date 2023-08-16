@@ -49,7 +49,7 @@
                     <a href="{{ route('sellers_net_sheet') }}">Create a net sheet</a>
                 @endif
                 </div>
-                @dd($data)
+               
             </div>
         </div>
     </div>
