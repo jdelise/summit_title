@@ -5,7 +5,9 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestingController;
+use App\Mail\ContactFormSubmitted;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -48,6 +50,10 @@ Route::get('location', [PagesController::class, 'location'])->name('location');
 Route::get('order_title_work', [PagesController::class,'order_title_work'])->name('order_title_work');
 Route::post('order_title_work', [PagesController::class,'proccess_title_work'])->name('order_title_work_post');
 Route::get('contact', [PagesController::class,'contact'])->name('contact');
+
+Route::match(['get', 'post'],'contact_form_submit', [PagesController::class, 'contactFormSubmitted']);
+
+Route::get('/mail', [PagesController::class, 'mailable']);
 
 
 

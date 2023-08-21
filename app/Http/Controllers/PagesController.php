@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactFormSubmitted;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PagesController extends Controller
 {
@@ -36,5 +38,13 @@ class PagesController extends Controller
     }
     public function userDashboard() {
         return view('pages.userDashboard');
+    }
+    public function contactFormSubmitted(Request $request) {
+        
+        Mail::to('joedelise@gmail.com')->send(new ContactFormSubmitted($request));
+        return redirect('/');
+    }
+    public function mailable(Request $request) {
+        return new ContactFormSubmitted($request);
     }
 }

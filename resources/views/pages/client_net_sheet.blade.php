@@ -2,6 +2,7 @@
     @section('title', 'Seller Net Sheet | Summit Title')
     @section('styles')
         <script defer src="https://unpkg.com/alpinejs-money@latest/dist/money.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @endsection
     @section('content')
@@ -36,7 +37,7 @@
                         <input type="text" id="autocomplete" x-on: show_label="false" placeholder="Address of property"
                             class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500">
                     </div>
-        
+
                     <div class="mb-4 sm:mb-8">
                         <label class="block mb-2 text-sm font-medium">Purchase Price:</label>
                         <div class="relative mt-2 rounded-md shadow-sm">
@@ -45,7 +46,7 @@
                             </div>
                             <input type="text"
                                 class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
-                                x-model.number="form.price" placeholder="0.00">
+                                x-model="form.price" placeholder="0.00">
                         </div>
                     </div>
                     <div class="mb-4 sm:mb-8">
@@ -65,15 +66,30 @@
 
                         <label class="block mb-2 text-sm font-medium">Other Expenses (e.g. HOA fees, inspection
                             concessions):</label>
-                        <div class="relative mt-2 rounded-md shadow-sm">
-                            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                <span class="text-gray-500 sm:text-sm">$</span>
-                            </div>
-                            <input type="text"
-                                class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
-                                x-model.number="form.other_expenses" placeholder="0.00">
-                        </div>
+                        <template x-for="(expense, index) in form.other_expenses">
+                            <div class="flex flex-col mt-2 md:flex-row space-x-2">
+                                <div class="md:w-1/2">
+                                    <input type="text"
+                                        class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                                        x-model="expense.name" placeholder="Name of expense">
+                                </div>
+                                <div class="md:w-1/2 flex">
+                                    <div class="relative rounded-md shadow-sm">
+                                        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                            <span class="text-gray-500 sm:text-sm">$</span>
+                                        </div>
+                                        <input type="text"
+                                            class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                                            x-model.number="expense.amount" placeholder="0.00">
+                                    </div>
+                                    <button type="button" class="bg-red-500 px-3 py-2 rounded text-white"
+                                        @click="removeExpense(index)">&times;</button>
+                                </div>
 
+                            </div>
+                        </template>
+                        <button type="button" class="bg-blue-500 mt-3 px-3 py-2 rounded text-white"
+                            @click="addNewExpense()">Add Expense</button>
                     </div>
                     <div class="mb-4 sm:mb-8">
 
@@ -136,7 +152,7 @@
                 </div>
                 <div x-show="hasProcessed"
                     class="bg-white border md:p-10 mt-5 p-4 relative rounded-xl shadow-xl sm:mt-10 z-10 ml-4 md:w-1/2">
-                    <div class="border grid grid-cols-2 p-5 rounded">
+                    <div class="border grid md:grid-cols-2 p-5 rounded">
 
                         <div class="col-md-4">
                             <h4 class="text-lg md:text-2xl text-blue-500">Seller's Proceeds</h4>
@@ -144,8 +160,8 @@
                             </h3>
                             <span class="text-sm">Net At Close</span>
                         </div>
-                        <div class="border-left col-md-8 text-right">
-                            <div class="grid grid-cols-2 mb-4 items-center">
+                        <div class="border-left col-md-8 md:text-right">
+                            <div class="grid md:grid-cols-2 mb-4 items-center">
                                 <div class="col text-left">
                                     <span class="font-bold">Purchase Price:</span>
                                 </div>
@@ -153,7 +169,7 @@
                                     <span x-money.en-US.USD.decimal="form.price"></span>
                                 </div>
                             </div>
-                            <div class="grid grid-cols-2 mb-4 items-center">
+                            <div class="grid md:grid-cols-2 mb-4 items-center">
                                 <div class="col text-left">
                                     <span class="font-bold">Loan Balance:</span>
                                 </div>
@@ -161,7 +177,7 @@
                                     <span x-money.en-US.USD.decimal="form.loan_balance"></span>
                                 </div>
                             </div>
-                            <div class="grid grid-cols-2 mb-4 items-center">
+                            <div class="grid md:grid-cols-2 mb-4 items-center">
                                 <div class="col text-left">
                                     <span class="font-bold">Fees:</span>
                                 </div>
@@ -169,8 +185,8 @@
                                     <span x-money.en-US.USD.decimal="totalFees"></span>
                                 </div>
                             </div>
-                            
-                            <div class="grid grid-cols-2 mb-4 items-center">
+
+                            <div class="grid md:grid-cols-2 mb-4 items-center">
                                 <div class="col text-left">
                                     <span class="font-bold">Net:</span>
                                 </div>
@@ -180,13 +196,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="border grid grid-cols-2 p-5 rounded mt-4">
+                    <div class="border grid md:grid-cols-2 p-5 rounded mt-4">
                         <div class="col-md-4">
                             <h3 class="text-lg md:text-2xl text-blue-500 pr-4">Total Seller Closing Fees</h3>
                             <h3 x-money.en-US.USD.decimal="totalFees" class="text-xl md:text-3xl text-red-700"></h3>
                         </div>
-                        <div class="border-left col-md-8 text-right">
-                            <div class="grid grid-cols-2 mb-4 items-center">
+                        <div class="border-left col-md-8 md:text-right">
+                            <div class="grid md:grid-cols-2 mb-4 items-center">
                                 <div class="col text-left">
                                     <span class="font-bold">Title Insurance:</span>
                                 </div>
@@ -195,7 +211,7 @@
                                 </div>
                             </div>
                             <template x-for="fee in fees.other_fees">
-                                <div class="grid grid-cols-2 mb-4 items-center">
+                                <div class="grid md:grid-cols-2 mb-4 items-center">
                                     <div class="col text-left">
                                         <span x-text="fee.fee_name + ':'" class="font-bold"></span>
                                     </div>
@@ -204,15 +220,18 @@
                                     </div>
                                 </div>
                             </template>
-                            <div class="grid grid-cols-2 mb-4 items-center">
-                                <div class="col text-left">
-                                    <span class="font-bold">Other Expenses:</span>
+                            <template x-for="expense in fees.other_expenses">
+                                <div class="grid md:grid-cols-2 mb-4 items-center">
+                                    <div class="col text-left">
+                                        <span class="font-bold" x-text="expense.name"></span>
+                                    </div>
+                                    <div class="col">
+                                        <span x-money.en-US.USD.decimal="'-' + expense.amount"></span>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <span x-money.en-US.USD.decimal="'-' + fees.other_expenses"></span>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 mb-4 items-center">
+                            </template>
+
+                            <div class="grid md:grid-cols-2 mb-4 items-center">
                                 <div class="col text-left">
                                     <span class="font-bold">Listing Office Commission:</span>
                                 </div>
@@ -220,7 +239,7 @@
                                     <span x-money.en-US.USD.decimal="'-' + fees.sellerCommission"></span>
                                 </div>
                             </div>
-                            <div class="grid grid-cols-2 mb-4 items-center">
+                            <div class="grid md:grid-cols-2 mb-4 items-center">
                                 <div class="col text-left">
                                     <span class="font-bold">Buyer Agent Commission:</span>
                                 </div>
@@ -228,7 +247,7 @@
                                     <span x-money.en-US.USD.decimal="'-' + fees.buyerCommission"></span>
                                 </div>
                             </div>
-                            <div class="grid grid-cols-2 mb-4 items-center">
+                            <div class="grid md:grid-cols-2 mb-4 items-center">
                                 <div class="col text-left">
                                     <span class="font-bold">Taxes:</span>
                                 </div>
@@ -238,7 +257,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="border grid grid-cols-2 p-5 rounded mt-4 gap-6">
+                    <div class="border grid md:grid-cols-2 p-5 rounded mt-4 gap-6">
                         @if (Route::has('login'))
                             @auth
                                 <button x-on:click="saveData = true"
@@ -285,7 +304,7 @@
 
                 </p>
             </div>
-            
+
             <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true" x-show="modal">
 
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
@@ -410,11 +429,11 @@
                     form: {
                         feesPaidBy: 'seller',
                         price: '',
-                        loan_balance: '0.00',
-                        other_expenses: '0.00',
+                        loan_balance: '',
+                        other_expenses: [],
                         buyerCommission: '3',
                         sellerCommission: '3',
-                        taxes: '0.00',
+                        taxes: '',
                         title_fee: '',
                         total_other_fees: '',
                         fee_type: '',
@@ -434,7 +453,25 @@
                             0);
                         console.log(sumValues);
                     },
+                    addNewExpense() {
+                        this.form.other_expenses.push({
+
+                        });
+                    },
+                    removeExpense(index) {
+                        this.form.other_expenses.splice(index, 1);
+                    },
                     async retrieveFees() {
+                        if(this.form.taxes === ''){
+                            this.form.taxes = 0;
+                        }else{
+                            console.log('emnumberpty');
+                        }
+                        if(this.form.loan_balance === ''){
+                            this.form.loan_balance = 0;
+                        }else{
+                            console.log('loan');
+                        }
                         let response = await fetch('/calculateFees', {
                             method: 'POST',
                             headers: {
@@ -474,10 +511,16 @@
                             console.log(this.fees);
                             this.form.total_other_fees = sum;
 
+                            let total_other_expenses = 0;
+                            for (let i = 0; i < this.fees.other_expenses.length; i++) {
+                                total_other_expenses += parseFloat(this.fees.other_expenses[i].amount);
+                            }
+
                             this.totalFees = parseFloat(this.form.title_fee) + parseFloat(this.form.total_other_fees) +
                                 parseFloat(this.fees.taxes) + (parseFloat(this.fees.sellerCommission) + parseFloat(this
-                                    .fees.buyerCommission) + parseFloat(this.fees.other_expenses));
-                            this.funds_to_seller = (parseFloat(this.form.price) - parseFloat(this.form.loan_balance)) - parseFloat(this.totalFees);
+                                    .fees.buyerCommission) + total_other_expenses);
+                            this.funds_to_seller = (parseFloat(this.form.price) - parseFloat(this.form.loan_balance)) -
+                                parseFloat(this.totalFees);
                             this.hasProcessed = true;
                             await this.submitData();
                         } else {
@@ -563,33 +606,33 @@
                             (document.getElementById('autocomplete')), {
                                 types: ['geocode']
                             });
-                            autocomplete.addListener('place_changed', () => {
-                                const componentForm = {
-                                     street_number: 'short_name',
-                                    route: 'long_name',
-                        locality: 'long_name',
-                        administrative_area_level_1: 'short_name',
-                        postal_code: 'short_name'
-                     };
-                        // Get the place details from the autocomplete object.
-                        const place = autocomplete.getPlace();
+                        autocomplete.addListener('place_changed', () => {
+                            const componentForm = {
+                                street_number: 'short_name',
+                                route: 'long_name',
+                                locality: 'long_name',
+                                administrative_area_level_1: 'short_name',
+                                postal_code: 'short_name'
+                            };
+                            // Get the place details from the autocomplete object.
+                            const place = autocomplete.getPlace();
 
-                        this.form.longitude = place.geometry.location.lng();
-                        this.form.latitude = place.geometry.location.lat();
+                            this.form.longitude = place.geometry.location.lng();
+                            this.form.latitude = place.geometry.location.lat();
 
-                        console.log(this.form.latitude);
+                            console.log(this.form.latitude);
 
-                        for (let i = 0; i < place.address_components.length; i++) {
-                            let addressType = place.address_components[i].types[0];
-                            if (componentForm[addressType]) {
+                            for (let i = 0; i < place.address_components.length; i++) {
+                                let addressType = place.address_components[i].types[0];
+                                if (componentForm[addressType]) {
 
-                                var val = place.address_components[i][componentForm[addressType]];
-                                console.log(addressType, val);
-                                this.form[addressType] = val;
+                                    var val = place.address_components[i][componentForm[addressType]];
+                                    console.log(addressType, val);
+                                    this.form[addressType] = val;
 
+                                }
                             }
-                        }
-                            });
+                        });
                     }
                 }
             };
