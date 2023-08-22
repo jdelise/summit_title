@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'PLEASE EDIT | Summit Title')
+@section('title', 'Success! | Summit Title')
 @section('styles')
     <script defer src="https://unpkg.com/alpinejs-money@latest/dist/money.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">

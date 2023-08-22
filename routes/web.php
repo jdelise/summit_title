@@ -44,14 +44,14 @@ Route::get('/calculateFees', [\App\Http\Controllers\SellerNetsheet::class, 'calc
 
 
 Route::get('seller-net-sheet', [\App\Http\Controllers\SellerNetsheet::class, 'index']);
-Route::get('oder_title_work',[PagesController::class, 'oder_title_work'])->name('oder_title_work');
+Route::get('order_title_work',[PagesController::class, 'order_title_work'])->name('order_title_work');
 Route::get('services',[PagesController::class, 'services'])->name('services');
 Route::get('location', [PagesController::class, 'location'])->name('location');
-Route::get('order_title_work', [PagesController::class,'order_title_work'])->name('order_title_work');
-Route::post('order_title_work', [PagesController::class,'proccess_title_work'])->name('order_title_work_post');
 Route::get('contact', [PagesController::class,'contact'])->name('contact');
+Route::get('success', [PagesController::class,'success'])->name('success');
 
 Route::match(['get', 'post'],'contact_form_submit', [PagesController::class, 'contactFormSubmitted']);
+Route::match(['get', 'post'],'title_request_submit', [PagesController::class, 'titleRequestFormSubmitted'])->name('order_title_work_submit');
 
 Route::get('/mail', [PagesController::class, 'mailable']);
 

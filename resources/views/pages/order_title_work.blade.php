@@ -28,20 +28,22 @@
         </div>
     </div>
     <!-- End Hero -->
-    <div class="lg:px-8 max-w-3xl mx-auto pb-20 px-4 sm:px-6 space-y-8 mt-10" x-data="{}">
-        <form 
-        method="POST" 
-        action="{{route('order_title_work_post')}}"
+    <div class="lg:px-8 max-w-3xl mx-auto pb-20 px-4 sm:px-6 space-y-8 mt-10" >
+        <form
+        x-data="{}" 
+        method="POST"
+        x-on:keydown.enter.prevent="" 
+        action="{{route('order_title_work_submit')}}"
         class="border border-gray-300 p-6 rounded-lg shadow-xl">
         @csrf
-                <input type="hidden" id="street_number" name="street_number"/>
-                <input type="hidden" id="route" name="route"/>
-                <input type="hidden" id="unit" name="unit"/>
-                <input type="hidden" id="locality" name="locality"/>
-                <input type="hidden" id="administrative_area_level_1" name="administrative_area_level_1"/>
-                <input type="hidden" name="zip_code" id="postal_code"/>
-                <input type="hidden" name="latitude" id="latitude"/>
-                <input type="hidden" name="longitude" id="longitude"/>
+                <input type="hidden" id="street_number" name="street_number" value="{{old('street_number')}}"/>
+                <input type="hidden" id="route" name="route" value="{{old('route')}}"/>
+                <input type="hidden" id="unit" name="unit" value="{{old('unit')}}"/>
+                <input type="hidden" id="locality" name="locality" value="{{old('locality')}}"/>
+                <input type="hidden" id="administrative_area_level_1" name="administrative_area_level_1" value="{{old('administrative_area_level_1')}}"/>
+                <input type="hidden" name="zip_code" id="postal_code" value="{{old('zip_code')}}"/>
+                <input type="hidden" name="latitude" id="latitude" value="{{old('latitude')}}"/>
+                <input type="hidden" name="longitude" id="longitude" value="{{old('longitude')}}"/>
         <div class="flex flex-col space-y-5">
             <div>
                 <label class="block mb-2 text-sm font-medium"><span class="text-red-400 mr-1">*</span>Full Name:</label>
@@ -49,25 +51,38 @@
                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                                    placeholder="Please enter your full name"
                                    name="agent_name"
+                                   value="{{old('agent_name')}}"
                             >
+                            @error('agent_name')
+                            <span class="mt-2 text-sm text-red-600">You must enter a valid name</span>
+                            @enderror
+                            
             </div>
             <div class="flex flex-col md:flex-row md:space-x-4">
                 <div class="md:w-1/2">
-                    <label class="block mb-2 text-sm font-medium">Email Address:</label>
+                    <label class="block mb-2 text-sm font-medium"><span class="text-red-400 mr-1">*</span>Email Address:</label>
                     <input type="agent_email"
                            class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                            placeholder="Please enter your email address" 
-                           name="email_address"
+                           name="agent_email_address"
+                           value="{{old('agent_email_address')}}"
                     >
+                    @error('agent_email_address')
+                            <span class="mt-2 text-sm text-red-600">You must enter a valid email address</span>
+                            @enderror
                 </div>
                 <div class="md:w-1/2">
-                    <label class="block mb-2 text-sm font-medium">Phone Number:</label>
+                    <label class="block mb-2 text-sm font-medium"><span class="text-red-400 mr-1">*</span>Phone Number:</label>
                     <input type="text"
                            class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                            x-mask="(999) 999-9999"
                            placeholder="(555) 555-5555" 
                            name="agent_phone_number"
+                           value="{{old('agent_phone_number')}}"
                     >
+                    @error('agent_phone_number')
+                            <span class="mt-2 text-sm text-red-600">You must enter a valid phone number</span>
+                            @enderror
                 </div>
                
             </div>
@@ -76,7 +91,8 @@
                             <input type="text"
                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                                    placeholder="Please enter your office name"
-                                   name="office_name"
+                                   name="agent_office_name"
+                                   value="{{old('agent_office_name')}}"
                             >
             </div>
             <div>
@@ -87,6 +103,9 @@
                                    placeholder="Address of property" 
                                    id="autocomplete"
                             >
+                            @error('street_number')
+                            <span class="mt-2 text-sm text-red-600">You must enter a valid property address</span>
+                            @enderror
             </div>
         
             <div>
@@ -95,6 +114,7 @@
                        class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 flatPicker"
                        placeholder="Please enter an estimated closing date" 
                        name="closing_date"
+                       value="{{old('closing_date')}}"
                 >
             </div>
             <div>
@@ -103,6 +123,7 @@
                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                                    placeholder="Please enter your full name"
                                    name="buyer_agent_name"
+                                   value="{{old('buyer_agent_name')}}"
                             >
             </div>
             <div class="flex flex-col md:flex-row md:space-x-4">
@@ -112,6 +133,7 @@
                            class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                            placeholder="Please enter your email address" 
                            name="buyer_agent_email_address"
+                           value="{{old('buyer_agent_email_address')}}"
                     >
                 </div>
                 <div class="md:w-1/2">
@@ -121,6 +143,7 @@
                            x-mask="(999) 999-9999"
                            placeholder="(555) 555-5555" 
                            name="buyer_agent_phone_number"
+                           value="{{old('buyer_agent_phone_number')}}"
                     >
                 </div>
                
@@ -131,6 +154,7 @@
                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                                    placeholder="Please enter your office name"
                                    name="buyer_agent_office_name"
+                                   value="{{old('buyer_agent_office_name')}}"
                             >
             </div>
             <div>
@@ -139,6 +163,7 @@
                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                                    placeholder="Please enter your full name"
                                    name="lender_name"
+                                   value="{{old('lender_name')}}"
                             >
             </div>
             <div class="flex flex-col md:flex-row md:space-x-4">
@@ -148,6 +173,7 @@
                            class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                            placeholder="Please enter your email address" 
                            name="lender_email_address"
+                           value="{{old('lender_email_address')}}"
                     >
                 </div>
                 <div class="md:w-1/2">
@@ -157,6 +183,7 @@
                            x-mask="(999) 999-9999"
                            placeholder="(555) 555-5555" 
                            name="lender_phone_number"
+                           value="{{old('lender_phone_number')}}"
                     >
                 </div>
                

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ContactFormSubmitted;
+use App\Mail\TitleOrderSubmitted;
+use App\Models\Form;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -33,7 +35,7 @@ class PagesController extends Controller
     {
         return view('pages.contact');
     }
-    function proccess_title_work()
+    function success()
     {
         return view('pages.success');
     }
@@ -53,14 +55,36 @@ class PagesController extends Controller
             array_push($response, ['errors' => $validated->errors()]);
             return $response;
         }
+        $form = new Form();
+        $form->name = 'Contact Form Submit';
+        $form->data = json_encode($request->all());
+        $form->save();
+
         array_push($response, ['message' => 'success']);
 
-       
         Mail::to('joedelise@gmail.com')->send(new ContactFormSubmitted($request));
+
+
         return $response;
         //return redirect('/');
     }
     public function mailable(Request $request) {
         return new ContactFormSubmitted($request);
+    }
+    public function titleRequestFormSubmitted(Request $request) {
+        $validated = $request->validate([
+            'agent_name' => 'required',
+            'agent_email_address' => 'required|email',
+            'agent_phone_number' => 'required',
+            'street_number' => 'required'
+        ]);
+        $form = new Form();
+        $form->name = 'Order Title Work Form';
+        $form->data = json_encode($request->all());
+        $form->save();
+
+        Mail::to('joedelise@gmail.com')->send(new TitleOrderSubmitted($request));
+
+        return redirect()->route('success');
     }
 }
