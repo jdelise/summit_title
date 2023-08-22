@@ -2,6 +2,7 @@
 @section('title', 'Order Title Work | Summit Title')
 @section('styles')
     <script defer src="https://unpkg.com/alpinejs-money@latest/dist/money.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endsection
 @section('content')
@@ -27,7 +28,7 @@
         </div>
     </div>
     <!-- End Hero -->
-    <div class="lg:px-8 max-w-3xl mx-auto pb-20 px-4 sm:px-6 space-y-8 mt-10">
+    <div class="lg:px-8 max-w-3xl mx-auto pb-20 px-4 sm:px-6 space-y-8 mt-10" x-data="{}">
         <form 
         method="POST" 
         action="{{route('order_title_work_post')}}"
@@ -43,17 +44,17 @@
                 <input type="hidden" name="longitude" id="longitude"/>
         <div class="flex flex-col space-y-5">
             <div>
-                <label class="block mb-2 text-sm font-medium">Full Name:</label>
+                <label class="block mb-2 text-sm font-medium"><span class="text-red-400 mr-1">*</span>Full Name:</label>
                             <input type="text"
                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                                    placeholder="Please enter your full name"
-                                   name="full_name"
+                                   name="agent_name"
                             >
             </div>
             <div class="flex flex-col md:flex-row md:space-x-4">
                 <div class="md:w-1/2">
                     <label class="block mb-2 text-sm font-medium">Email Address:</label>
-                    <input type="email"
+                    <input type="agent_email"
                            class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                            placeholder="Please enter your email address" 
                            name="email_address"
@@ -63,15 +64,24 @@
                     <label class="block mb-2 text-sm font-medium">Phone Number:</label>
                     <input type="text"
                            class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
-                           placeholder="Please enter your best phone number" 
-                           name="phone_number"
+                           x-mask="(999) 999-9999"
+                           placeholder="(555) 555-5555" 
+                           name="agent_phone_number"
                     >
                 </div>
                
             </div>
             <div>
+                <label class="block mb-2 text-sm font-medium">Your Office Name:</label>
+                            <input type="text"
+                                   class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                                   placeholder="Please enter your office name"
+                                   name="office_name"
+                            >
+            </div>
+            <div>
                 
-                <label class="block mb-2 text-sm font-medium">Property Address:</label>
+                <label class="block mb-2 text-sm font-medium"><span class="text-red-400 mr-1">*</span>Property Address:</label>
                             <input type="text"
                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                                    placeholder="Address of property" 
@@ -88,13 +98,70 @@
                 >
             </div>
             <div>
-                <label class="block mb-2 text-sm font-medium">Your Office Name:</label>
+                <label class="block mb-2 text-sm font-medium">Buyer Agent's Name:</label>
+                            <input type="text"
+                                   class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                                   placeholder="Please enter your full name"
+                                   name="buyer_agent_name"
+                            >
+            </div>
+            <div class="flex flex-col md:flex-row md:space-x-4">
+                <div class="md:w-1/2">
+                    <label class="block mb-2 text-sm font-medium">Buyer Agent's Email Address:</label>
+                    <input type="agent_email"
+                           class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                           placeholder="Please enter your email address" 
+                           name="buyer_agent_email_address"
+                    >
+                </div>
+                <div class="md:w-1/2">
+                    <label class="block mb-2 text-sm font-medium">Buyer Agent's Phone Number:</label>
+                    <input type="text"
+                           class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                           x-mask="(999) 999-9999"
+                           placeholder="(555) 555-5555" 
+                           name="buyer_agent_phone_number"
+                    >
+                </div>
+               
+            </div>
+            <div>
+                <label class="block mb-2 text-sm font-medium">Buyer Agent's Office Name:</label>
                             <input type="text"
                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                                    placeholder="Please enter your office name"
-                                   name="office_name"
+                                   name="buyer_agent_office_name"
                             >
             </div>
+            <div>
+                <label class="block mb-2 text-sm font-medium">Lender's Name:</label>
+                            <input type="text"
+                                   class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                                   placeholder="Please enter your full name"
+                                   name="lender_name"
+                            >
+            </div>
+            <div class="flex flex-col md:flex-row md:space-x-4">
+                <div class="md:w-1/2">
+                    <label class="block mb-2 text-sm font-medium">Lender's Email Address:</label>
+                    <input type="agent_email"
+                           class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                           placeholder="Please enter your email address" 
+                           name="lender_email_address"
+                    >
+                </div>
+                <div class="md:w-1/2">
+                    <label class="block mb-2 text-sm font-medium">Lender's Phone Number:</label>
+                    <input type="text"
+                           class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                           x-mask="(999) 999-9999"
+                           placeholder="(555) 555-5555" 
+                           name="lender_phone_number"
+                    >
+                </div>
+               
+            </div>
+        
             <div>
                 <label class="block mb-2 text-sm font-medium">Purchase Agreement:</label>
                             <input type="file"
@@ -103,8 +170,8 @@
                                    name="purchase_agreement_file"
                             >
             </div>
-            <div>
-                <button type="submit" class="bg-green-500 p-3 px-5 rounded-lg text-white">Submit</button>
+            <div class="flex justify-center">
+                <button type="submit" class="bg-green-500 p-3 px-10 rounded-lg text-white">Submit</button>
             </div>
         </div>
         </form>

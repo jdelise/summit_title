@@ -2,6 +2,7 @@
 @section('title', 'Contact Us | Summit Title')
 @section('styles')
     <script defer src="https://unpkg.com/alpinejs-money@latest/dist/money.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 
@@ -39,7 +40,7 @@
                     We’d love to hear from you. Whether you have a question about our services, need assistance or just want to talk, we're here for you. Please use the contact information or form below to reach out to us.
                 </p>
                 <div>
-                    <form action="/contact"
+                    <form 
                           class="my-6 p-12 pb-2 border rounded shadow"
                           x-data="
                     {
@@ -49,17 +50,49 @@
                             phone: '',
                             message: ''
                         },
-                        submitForm(){
-
-                            this.showMessage = true;
+                        errorBag: [],
+                        showMessage: false,
+                        showFields: true,
+                        async submitForm() {
+                            this.errorBag = [];
+                            let response = await fetch('/contact_form_submit', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-type': 'application/json; charset=UTF-8',
+                                    'X-CSRF-TOKEN': document.head.querySelector('meta[name=csrf-token]').content
+                                },
+                                body: JSON.stringify(this.form),
+                            });
+                            if (response.ok) {
+                                
+                                let data = await response.json();
+                                console.log(data);
+                                if(data[0].message === 'success'){
+                                    this.showFields = false;
+                                    this.form.name= '';
+                                    this.form.email= '';
+                                    this.form.phone= '';
+                                    this.form.message= '';
+                                    this.showMessage = true;
+                                }else{
+                                    this.errorBag.push(data[1].errors);
+                                    
+                                    console.log(this.errorBag);
+                                }
+                                
+                            } else {
+                            
+                                flash('Something went wrong. Please contact system admin', 'error')
+                            }
+    
+    
+    
                         },
-
-                        showMessage: false
                     }
                     " x-on:submit.prevent="submitForm">
-
-                        <div class="mb-4 sm:mb-8">
-                            <label class="block mb-2 text-sm font-medium">Full Name:</label>
+                        
+                        <div class="mb-4 sm:mb-8" x-show="showFields">
+                            <label class="block mb-2 text-sm font-medium"><span class="text-red-400 mr-1">*</span>Full Name:</label>
                             <input type="text"
                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                                    x-model="form.name"
@@ -67,26 +100,27 @@
                             >
 
                         </div>
-                        <div class="mb-4 sm:mb-8">
+                        <div class="mb-4 sm:mb-8" x-show="showFields">
                             
-                            <label class="block mb-2 text-sm font-medium">Email:</label>
+                            <label class="block mb-2 text-sm font-medium"><span class="text-red-400 mr-1">*</span>Email:</label>
                             <input type="email"
                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                                    x-model="form.email"
                                    placeholder="your-email@email.com"
                             >
                         </div>
-                        <div class="mb-4 sm:mb-8">
-                            <label class="block mb-2 text-sm font-medium">Phone:</label>
-                            <input type="number"
+                        <div class="mb-4 sm:mb-8" x-show="showFields">
+                            <label class="block mb-2 text-sm font-medium"><span class="text-red-400 mr-1">*</span>Phone:</label>
+                            <input type="text"
                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                                   x-mask="(999) 999-9999"
                                    x-model="form.phone"
-                                   placeholder="(555) 000-0000"
+                                   placeholder="(555) 555-5555"
                             >
 
                         </div>
-                        <div class="mb-4 sm:mb-8">
-                            <label class="block mb-2 text-sm font-medium">Message:</label>
+                        <div class="mb-4 sm:mb-8" x-show="showFields">
+                            <label class="block mb-2 text-sm font-medium"><span class="text-red-400 mr-1">*</span>Message:</label>
                             <textarea type="text"
                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                                    x-model="form.message"
@@ -94,11 +128,16 @@
                             ></textarea>
 
                         </div>
+                        <div class="mb-4 sm:mb-8" x-show="showFields">
+                            <template x-for="error in errorBag[0]">
+                                <span class="text-red-400 mr-1 block mb-2 text-sm font-medium" x-text="error[0]"></span>
+                            </template>
+                        </div>
                         <div class="mb-4 sm:mb-8 bg-green-500 text-white pt-6 p-4 relative" x-show="showMessage">
                             <button class="absolute mr-2 mt-1 right-0 top-0 z-10" x-on:click="showMessage = false">x</button>
                             Thank you for reaching out to us. We have successfully received your information and a member of our team will respond to your inquiry promptly.
                         </div>
-                        <div class="mb-4 sm:mb-8 flex justify-end">
+                        <div class="mb-4 sm:mb-8 flex justify-end" x-show="showFields">
 
                             <button type="submit" class="bg-blue-800 px-6 py-2 rounded-full text-white">Send Message</button>
                         </div>

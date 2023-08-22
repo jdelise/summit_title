@@ -13,16 +13,12 @@ style="width:100%;">
                     style="vertical-align:top;" width="100%">
                     <tbody>
                         <tr>
-                            <td align="left"
-                                style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                <div
-                                    style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;font-weight:500;line-height:1;text-align:left;color:#000000;">
-                                    Insert text here
-                                    {{$request->input('full_name')}}
-                                    {{$request->input('email')}}
-                                </div>
+                            <td align="center" style="padding: 0 0 20px 0">
+                                <img src="{{url('/')}}/images/summit_title_bw_logo.png" alt="" style="width: 300px;">
+                                
                             </td>
                         </tr>
+                       
                         <tr>
                             <td align="center"
                                 style="font-size:0px;padding:10px 25px;word-break:break-word;">
@@ -33,15 +29,22 @@ style="width:100%;">
 </td></tr></table><![endif]-->
                             </td>
                         </tr>
+                    
                         <tr>
                             <td align="left"
                                 style="font-size:0px;padding:10px 25px;word-break:break-word;">
                                 <div
-                                    style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;font-weight:500;line-height:1;text-align:left;color:#000000;">
-                                    Insert text here
+                                    style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;font-weight:500;line-height:2;text-align:left;color:#000000;">
+                                    <h2>A new contact form has been submitted!</h2>
+                                    
+                                    Name: {{$request->input('full_name')}} <br>
+                                    Email Address: {{$request->input('email')}} <br>
+                                    Phone Number: {{$request->input('phone')}} <br>
+                                    Message: <br>{{$request->input('message')}}
                                 </div>
                             </td>
                         </tr>
+                        
                     </tbody>
                 </table>
             </div>

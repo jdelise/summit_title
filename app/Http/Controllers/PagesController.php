@@ -6,6 +6,7 @@ use App\Mail\ContactFormSubmitted;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class PagesController extends Controller
 {
@@ -40,9 +41,23 @@ class PagesController extends Controller
         return view('pages.userDashboard');
     }
     public function contactFormSubmitted(Request $request) {
-        
+        $validated = Validator::make($request->all(),[
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'message' => 'required'
+        ]);
+        $response = [];
+        if($validated->fails()){
+            array_push($response, ['message' => 'error']);
+            array_push($response, ['errors' => $validated->errors()]);
+            return $response;
+        }
+        array_push($response, ['message' => 'success']);
+
+        return $response;
         Mail::to('joedelise@gmail.com')->send(new ContactFormSubmitted($request));
-        return redirect('/');
+        //return redirect('/');
     }
     public function mailable(Request $request) {
         return new ContactFormSubmitted($request);
