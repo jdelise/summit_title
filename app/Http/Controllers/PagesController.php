@@ -55,8 +55,9 @@ class PagesController extends Controller
         }
         array_push($response, ['message' => 'success']);
 
-        return $response;
+       
         Mail::to('joedelise@gmail.com')->send(new ContactFormSubmitted($request));
+        return $response;
         //return redirect('/');
     }
     public function mailable(Request $request) {
