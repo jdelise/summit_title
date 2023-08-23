@@ -158,7 +158,7 @@
                             <h4 class="text-lg md:text-2xl text-blue-500">Seller's Proceeds</h4>
                             <h3 x-money.en-US.USD.decimal="funds_to_seller" class="text-xl md:text-3xl text-green-700">
                             </h3>
-                            <span class="text-sm">Net At Close</span>
+                            <span class="text-sm">Net At Closing</span>
                         </div>
                         <div class="border-left col-md-8 md:text-right">
                             <div class="grid md:grid-cols-2 mb-4 items-center">
@@ -262,6 +262,7 @@
                             @auth
                                 <button x-on:click="saveData = true"
                                     class="bg-blue-200 border border-blue-600 py-2 rounded text-blue-700">Save</button>
+                                   
                             @else
                                 <span><a class="text-blue-400 underline" href="{{ route('login') }}">Login</a> or <a
                                         class="text-blue-400 underline" href="{{ route('register') }}">register</a> for an
@@ -368,14 +369,7 @@
                             x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
                             <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                                 <div class="sm:flex sm:items-start">
-                                    <div
-                                        class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                        <svg class="h-6 w-6 text-green-800" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-                                        </svg>
-                                    </div>
+                                    
                                     <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                                         <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Do
                                             you want to save this data?</h3>
@@ -387,16 +381,21 @@
                                             <input type="text"
                                                 class="py-3  px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                                                 x-model="savedDataName">
+                                            
 
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                
                                 <button x-on:click="saveData = false" type="button"
                                     class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Exit</button>
-                                <button x-on:click.prevent="form ? updateData : ''" type="button"
-                                    class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Save</button>
+                                    @auth
+                                    <button x-on:click.prevent="form ? updateData({{auth()->user()->id}}) : ''" type="button"
+                                        class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Save</button>
+                                    @endauth
+                                
                             </div>
                         </div>
                     </div>
@@ -426,6 +425,7 @@
                     fees: {},
                     hasProcessed: false,
                     totalFees: '',
+                    userId: '0',
                     form: {
                         feesPaidBy: 'seller',
                         price: '',
@@ -564,7 +564,7 @@
                         }
 
                     },
-                    async updateData() {
+                    async updateData(user_id = 0) {
 
                         let response = await fetch('/updateSellersNetSheet', {
                             method: 'POST',
@@ -575,6 +575,7 @@
                             body: JSON.stringify({
                                 name: this.savedDataName,
                                 id: this.dataSaved.id,
+                                user_id: user_id,
                                 body: {
                                     form: this.form,
                                     funds_to_seller: this.funds_to_seller,

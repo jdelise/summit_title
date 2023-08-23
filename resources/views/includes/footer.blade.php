@@ -1,35 +1,13 @@
 <footer class="bg-gray-900">
     <div class="max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 lg:pt-20 mx-auto">
         <!-- Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+        <div class="flex flex-row gap-6 justify-center">
             <div class="col-span-full lg:col-span-1">
                 <a class="flex-none text-xl font-semibold text-white" href="#" aria-label="Brand">
                     <img src="/images/summit_title_white_logo.png" alt="" class="w-[200px]">
                 </a>
             </div>
-            <!-- End Col -->
-
-
-            <!-- End Col -->
-
-            <div class="col-span-1">
-                <h4 class="font-semibold text-gray-100">Company</h4>
-
-                <div class="mt-3 grid space-y-3">
-                    <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200" href="/">Home</a></p>
-                    <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200" href="/services">Services</a></p>
-                </div>
-            </div>
-            <div class="col-span-1">
-
-
-                <div class="mt-8 grid space-y-3">
-                    <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200" href="{{route('contact')}}">Contact Us</a></p>
-                    <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200" href="{{route('sellers_net_sheet')}}">Seller's Net Proceeds</a></p>
-                    <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200" href="{{route('order_title_work')}}">Order Title Work</a></p>
-                </div>
-            </div>
-            <!-- End Col -->
+            
 
             <!-- End Col -->
         </div>

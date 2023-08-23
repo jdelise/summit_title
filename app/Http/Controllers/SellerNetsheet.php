@@ -93,6 +93,7 @@ class SellerNetsheet extends Controller
     {
         $netsheet = NetSheet::find($request->id);
         $netsheet->name = $request->name;
+        $netsheet->user_id = $request->user_id;
         $netsheet->data = $request->body;
         $netsheet->save();
         return $netsheet;

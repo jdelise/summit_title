@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'PLEASE EDIT | Summit Title')
+@section('title', 'My Dashboard | Summit Title')
 @section('styles')
     <script defer src="https://unpkg.com/alpinejs-money@latest/dist/money.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -24,29 +24,36 @@
     </div>
     <!-- End Hero -->
     <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 pb-20 space-y-8">
-        <div class="flex flex-col md:flex-row">
+        <div class="flex flex-col md:flex-row md:space-x-4 mt-10">
             <div class="md:w-1/4 flex flex-col space-y-4">
-                <span>My Account</span>
-                <a href="{{ route('sellers_net_sheet') }}">Create a net sheet</a>
+                <span class="text-2xl">My Account</span>
+                @if (auth()->user()->netsheets->count() > 0)
+                <a href="{{ route('sellers_net_sheet') }}" class="bg-gradient-to-b from-blue-500/[.75] md:w-2/3 p-4 rounded-lg text-center text-white to-black">Create a net sheet</a>
+                @endif
             </div>
             <div class="md:w-3/4 flex flex-col">
-                <span>
+                <span class="text-2xl">
                     My Netsheets
                 </span>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 space-x-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 space-x-4 mt-4 space-y-4">
                 @if (auth()->user()->netsheets->count() > 0)
-                    @foreach (auth()->user()->netsheets as $netsheet)
+                    @foreach (auth()->user()->netsheets->sortDesc() as $netsheet)
                     @php
                         $data = json_decode($netsheet->data);
+                        //dd($data);
                     @endphp
                    
-                       <div class="flex">
+                       <a href="/printSellerNetSheet/{{$netsheet->id}}" target="_blank" class="border border-blue-300 flex flex-col hover:bg-gray-100 items-center p-2" title="Edit Netsheet">
                             <h4>{{ $netsheet->name }}</h4>
-                       </div>
+                            <span class="text-sm">Purchase Price</span>
+                            <span class="text-blue-700 text-lg">${{number_format($data->fees->request->price, 2, '.', ',')}}</span>
+                            <span class="text-sm">Seller Net</span>
+                            <span class="text-blue-700 text-lg">${{number_format($data->funds_to_seller, 2, '.', ',')}}</span>
+                       </a>
                     @endforeach
                 @else
-                    <a href="{{ route('sellers_net_sheet') }}">Create a net sheet</a>
+                    <a href="{{ route('sellers_net_sheet') }}" class="bg-gradient-to-b from-blue-500/[.75]  p-4 rounded-lg text-center text-white to-black">Create your first net sheet now!</a>
                 @endif
                 </div>
                
