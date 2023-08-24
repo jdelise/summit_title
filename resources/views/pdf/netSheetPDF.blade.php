@@ -35,7 +35,7 @@
         <h4 style="margin: 0">Net: <span>${{number_format($data->funds_to_seller, 2, '.', ',')}}</span></h4>
     </div>
     <div style="border: 1px solid #ddd; border-radius: 20px; padding: 20px; margin-top: 30px">
-        <h3 style="margin: 0; padding: 0">Total Seller Closing Fees: ${{number_format($data->totalFees, 2, '.', ',')}}<span></span></h3>
+        <h3 style="margin: 0; padding: 0">Itemized Seller Closing Fees: ${{number_format($data->totalFees, 2, '.', ',')}}<span></span></h3>
         <hr>
         <h4 style="margin: 0">Title Insurance: <span>${{number_format($data->fees->title_insurance, 2, '.', ',')}}</span></h4>
         @foreach($data->fees->other_fees as $other_fee)

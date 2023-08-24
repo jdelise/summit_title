@@ -198,7 +198,7 @@
                     </div>
                     <div class="border grid md:grid-cols-2 p-5 rounded mt-4">
                         <div class="col-md-4">
-                            <h3 class="text-lg md:text-2xl text-blue-500 pr-4">Total Seller Closing Fees</h3>
+                            <h3 class="text-lg md:text-2xl text-blue-500 pr-4">Itemized Seller Closing Fees</h3>
                             <h3 x-money.en-US.USD.decimal="totalFees" class="text-xl md:text-3xl text-red-700"></h3>
                         </div>
                         <div class="border-left col-md-8 md:text-right">
