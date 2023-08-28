@@ -62,7 +62,7 @@ class PagesController extends Controller
 
         array_push($response, ['message' => 'success']);
 
-        Mail::to('joedelise@gmail.com')->send(new ContactFormSubmitted($request));
+        Mail::to('clientcare@summittitle.org')->bcc('joedelise@gmail.com')->send(new ContactFormSubmitted($request));
 
 
         return $response;
@@ -83,7 +83,7 @@ class PagesController extends Controller
         $form->data = json_encode($request->all());
         $form->save();
 
-        Mail::to('joedelise@gmail.com')->send(new TitleOrderSubmitted($request));
+        Mail::to('clientcare@summittitle.org')->bcc('joedelise@gmail.com')->send(new TitleOrderSubmitted($request));
 
         return redirect()->route('success');
     }
