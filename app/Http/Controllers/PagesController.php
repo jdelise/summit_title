@@ -8,6 +8,7 @@ use App\Models\Form;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class PagesController extends Controller
@@ -78,9 +79,14 @@ class PagesController extends Controller
             'agent_phone_number' => 'required',
             'street_number' => 'required'
         ]);
+
+        $file = $request->file('purchase_agreement_file');
+        $purcahse_agreement_url = Storage::putFile('public/files', $request->file('purchase_agreement_file'));
+        dd(url('/') . '/' . $purcahse_agreement_url);
+        $request->merge(['purcahse_agreement' => $purcahse_agreement_url]);
         $form = new Form();
         $form->name = 'Order Title Work Form';
-        $form->data = json_encode($request->all());
+        $form->data = json_encode($request->except(['_token','purchase_agreement_file']));
         $form->save();
 
         Mail::to('clientcare@summittitle.org')->bcc('joedelise@gmail.com')->send(new TitleOrderSubmitted($request));

@@ -32,6 +32,7 @@
         <form
         x-data="{}" 
         method="POST"
+        enctype="multipart/form-data"
         x-on:keydown.enter.prevent="" 
         action="{{route('order_title_work_submit')}}"
         class="border border-gray-300 p-6 rounded-lg shadow-xl">
@@ -189,14 +190,14 @@
                
             </div>
         
-            {{-- <div>
+           <div>
                 <label class="block mb-2 text-sm font-medium">Purchase Agreement:</label>
                             <input type="file"
                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                                    placeholder="Please enter your office name"
                                    name="purchase_agreement_file"
                             >
-            </div> --}}
+            </div>
             <div class="flex justify-center">
                 <button type="submit" class="bg-green-500 p-3 px-10 rounded-lg text-white">Submit</button>
             </div>
