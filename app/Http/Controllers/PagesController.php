@@ -88,11 +88,11 @@ class PagesController extends Controller
                 $request->merge(['purchase_agreement' => url('storage') . '/' .$purchase_agreement_url]);
             }else{
             
-                $request->merge(['purcahse_agreement' => 'No purchase Agreement Attached']);
+                $request->merge(['purcahse_agreement' => 'No Purchase Agreement Attached']);
             }
         }else{
             
-            $request->merge(['purcahse_agreement' => 'No purchase Agreement Attached']);
+            $request->merge(['purcahse_agreement' => 'No Purchase Agreement Attached']);
         }
         
         
