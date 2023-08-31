@@ -81,11 +81,12 @@ class PagesController extends Controller
         ]);
 
         $file = $request->file('purchase_agreement_file');
+        $purchase_agreement_url = Storage::putFile('files', $request->file('purchase_agreement_file'));
         if($request->file('purchase_agreement_file')->isValid()){
-            $purcahse_agreement_url = Storage::putFile('files', $request->file('purchase_agreement_file'));
-            $request->merge(['purcahse_agreement' => $purcahse_agreement_url]);
+            
+            $request->merge(['purchase_agreement' => url('storage') . '/' .$purchase_agreement_url]);
         }else{
-            $purcahse_agreement_url = Storage::putFile('files', $request->file('purchase_agreement_file'));
+        
             $request->merge(['purcahse_agreement' => 'No purchase Agreement Attached']);
         }
         
