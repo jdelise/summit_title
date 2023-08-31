@@ -81,9 +81,14 @@ class PagesController extends Controller
         ]);
 
         $file = $request->file('purchase_agreement_file');
-        $purcahse_agreement_url = Storage::putFile('files', $request->file('purchase_agreement_file'));
-        dd(asset('storage') .'/' . $purcahse_agreement_url);
-        $request->merge(['purcahse_agreement' => $purcahse_agreement_url]);
+        if($request->file()->isValid()){
+            $purcahse_agreement_url = Storage::putFile('files', $request->file('purchase_agreement_file'));
+            $request->merge(['purcahse_agreement' => $purcahse_agreement_url]);
+        }else{
+            $purcahse_agreement_url = Storage::putFile('files', $request->file('purchase_agreement_file'));
+            $request->merge(['purcahse_agreement' => 'No purchase Agreement Attached']);
+        }
+        
         $form = new Form();
         $form->name = 'Order Title Work Form';
         $form->data = json_encode($request->except(['_token','purchase_agreement_file']));
