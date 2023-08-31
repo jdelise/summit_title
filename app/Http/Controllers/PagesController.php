@@ -81,7 +81,7 @@ class PagesController extends Controller
         ]);
 
         $file = $request->file('purchase_agreement_file');
-        if($request->file()->isValid()){
+        if($request->file('purchase_agreement_file')->isValid()){
             $purcahse_agreement_url = Storage::putFile('files', $request->file('purchase_agreement_file'));
             $request->merge(['purcahse_agreement' => $purcahse_agreement_url]);
         }else{
