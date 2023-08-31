@@ -36,9 +36,31 @@ style="width:100%;">
                                 <div
                                     style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;font-weight:500;line-height:2;text-align:left;color:#000000;">
                                     <h2>A new title order has been submitted!</h2>
-                                    @foreach ($request->except(['_token','purchase_agreement_file']) as $key=>$value)
-                                        {{$key}}: {{$value}} <br>
-                                    @endforeach
+                                    <p>
+                                        Street Number: {{$request->street_number}} <br>
+                                        Street Name: {{$request->route}} <br>
+                                        Unit: {{$request->unit}} <br>
+                                        City: {{$request->locality}} <br>
+                                        State: {{$request->administrative_area_level_1}} <br>
+                                        Zip Code: {{$request->zip_code}} <br>
+                                        Agent Name: {{$request->agent_name}} <br>
+                                        Agent Email: {{$request->agent_email_address}} <br>
+                                        Agent Phone: {{$request->agent_phone_number}} <br>
+                                        Closing Date: {{$request->closing_date}} <br>
+                                        Buyer Agent Name: {{$request->buyer_agent_name}} <br>
+                                        Buyer Agent Email: {{$request->buyer_agent_email_address}} <br>
+                                        Buyer Agent Phone: {{$request->buyer_agent_phone_number}} <br>
+                                        Buyer Agent Office: {{$request->buyer_agent_office_name}} <br>
+                                        Lender Name: {{$request->lender_name}} <br>
+                                        Lender Email: {{$request->lender_email_address}} <br>
+                                        Lender Phone Number: {{$request->lender_phone_number}} <br>
+                                        Attached File: {{$request->lender_phone_number}} <br>
+                                        @if ($request->purchase_agreement === 'No Purchase Agreement Attached')
+                                        No Purchase Agreement Attached
+                                        @else
+                                        <a href="{{$request->purchase_agreement}}">Purchase Agreement</a>
+                                        @endif
+                                    </p>
                                 </div>
                             </td>
                         </tr>
