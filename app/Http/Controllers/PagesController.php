@@ -81,7 +81,7 @@ class PagesController extends Controller
         ]);
 
         $file = $request->file('purchase_agreement_file');
-        $purcahse_agreement_url = Storage::putFile('public/files', $request->file('purchase_agreement_file'));
+        $purcahse_agreement_url = Storage::putFile('files', $request->file('purchase_agreement_file'));
         dd(asset('storage') .'/' . $purcahse_agreement_url);
         $request->merge(['purcahse_agreement' => $purcahse_agreement_url]);
         $form = new Form();
