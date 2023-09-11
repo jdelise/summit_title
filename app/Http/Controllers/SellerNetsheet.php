@@ -106,7 +106,8 @@ class SellerNetsheet extends Controller
             if($price >= $fee->price_low && $price <= $fee->price_high){
                 $returnPrice = $fee->title_policy_fee;
             }elseif($price >= 1000000){
-                $returnPrice = 10000;
+                
+                $returnPrice = ($price / 1000) * 2;
             }
         }
         return $returnPrice;
