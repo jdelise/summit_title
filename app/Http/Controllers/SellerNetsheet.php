@@ -23,27 +23,31 @@ class SellerNetsheet extends Controller
     function calculateFees(Request $request) {
         $data = array();
         $data['request'] = $request->all();
-        $data['title_insurance'] = $this->getTitlePremium($request->price);
+        $salesPrice = $this->formatMoney($request->price);
+        $data['title_insurance'] = $this->getTitlePremium($salesPrice);
 
         if($request->is_commission_percentage === 'yes'){
-            $data['buyerCommission'] = $this->calculateCommission($request->price, $request->buyerCommission);
-            $data['sellerCommission'] = $this->calculateCommission($request->price, $request->sellerCommission);
+            $data['buyerCommission'] = $this->calculateCommission($salesPrice, $request->buyerCommission);
+            $data['sellerCommission'] = $this->calculateCommission($salesPrice, $request->sellerCommission);
         }else{
-            $data['buyerCommission'] = $request->buyerCommission;
-            $data['sellerCommission'] = $request->sellerCommission;
+            $data['buyerCommission'] = $this->formatMoney($request->buyerCommission);
+            $data['sellerCommission'] = $this->formatMoney($request->sellerCommission);
         }
 
        
             if($request->is_taxes_percentage === 'no'){
-                $data['taxes'] = $this->estimateTaxes($request->taxes, $request->closing_date);
+                $data['taxes'] = $this->estimateTaxes($this->formatMoney($request->taxes), $request->closing_date);
             }else{
-                $taxes = ($request->price / 100) * $request->taxes;
+                $taxes = ($salesPrice / 100) * $request->taxes;
                 $data['taxes'] = $this->estimateTaxes($taxes, $request->closing_date);
             }
         
         $data['other_expenses'] = $request->other_expenses;
         $data['other_fees'] = $this->getOtherFees($request->fee_type);
         return $data;
+    }
+    public function formatMoney($money) {
+        return (float)str_replace(",","",$money);
     }
     public function getClosingFee($paid_by, $fees)
     {
@@ -88,6 +92,12 @@ class SellerNetsheet extends Controller
         $netsheet = NetSheet::find($id);
         $pdf = PDF::loadView('pdf.netSheetPDF', compact('netsheet'));
         return $pdf->stream($netsheet->name . 'pdf');
+    }
+    public function editSellerNetSheet($id) {
+
+        $netsheet = NetSheet::find($id);
+
+        return view('pages.edit_client_net_sheet', compact('netsheet'));
     }
     public function updateSellersNetSheet(Request $request)
     {

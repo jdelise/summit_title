@@ -6,16 +6,16 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- Fonts -->
-
-    <!-- Scripts -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
-    <title></title>
-</head>
-<body>
     @php
     $data = json_decode($netsheet->data);
     $date = \Carbon\Carbon::parse($data->form->closing_date);
     @endphp
+    <!-- Scripts -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+    <title>{{$data->form->street_number}} {{$data->form->route}}</title>
+</head>
+<body>
+    
     
     <div style="width: 126px; margin: 0 auto">
         <img src="{{url('/')}}/images/summit_title_bw_logo.png" alt="" style="width: 100%;">
@@ -29,27 +29,27 @@
         <h3 style="margin: 0; padding: 0">Estimated Proceeds: ${{number_format($data->funds_to_seller, 2, '.', ',')}}<span></span></h3>
         <hr>
         <h4 style="margin: 0">Closing Date: <span>{{$date->format('M d, Y')}}</span></h4>
-        <h4 style="margin: 0">Purchase Price: <span>${{number_format($data->form->price, 2, '.', ',')}}</span></h4>
-        <h4 style="margin: 0">Loan Balance: <span>${{number_format($data->form->loan_balance, 2, '.', ',')}}</span></h4>
-        <h4 style="margin: 0">Fees: <span>${{number_format($data->totalFees, 2, '.', ',')}}</span></h4>
-        <h4 style="margin: 0">Net: <span>${{number_format($data->funds_to_seller, 2, '.', ',')}}</span></h4>
+        <h4 style="margin: 0">Purchase Price: <span>${{number_format((float)str_replace(",","",$data->form->price), 2, '.', ',')}}</span></h4>
+        <h4 style="margin: 0">Loan Balance: <span>${{number_format((float)str_replace(",","",$data->form->loan_balance), 2, '.', ',')}}</span></h4>
+        <h4 style="margin: 0">Fees: <span>${{number_format((float)str_replace(",","",$data->totalFees), 2, '.', ',')}}</span></h4>
+        <h4 style="margin: 0">Net: <span>${{number_format((float)str_replace(",","",$data->funds_to_seller), 2, '.', ',')}}</span></h4>
     </div>
     <div style="border: 1px solid #ddd; border-radius: 20px; padding: 20px; margin-top: 30px">
-        <h3 style="margin: 0; padding: 0">Itemized Seller Closing Fees: ${{number_format($data->totalFees, 2, '.', ',')}}<span></span></h3>
+        <h3 style="margin: 0; padding: 0">Itemized Seller Closing Fees: ${{number_format((float)str_replace(",","",$data->totalFees), 2, '.', ',')}}<span></span></h3>
         <hr>
-        <h4 style="margin: 0">Title Insurance: <span>${{number_format($data->fees->title_insurance, 2, '.', ',')}}</span></h4>
+        <h4 style="margin: 0">Title Insurance: <span>${{number_format((float)str_replace(",","",$data->fees->title_insurance), 2, '.', ',')}}</span></h4>
         @foreach($data->fees->other_fees as $other_fee)
-            <h4 style="margin: 0">{{$other_fee->fee_name}}: <span>${{number_format($other_fee->fee_amount, 2, '.', ',')}}</span></h4>
+            <h4 style="margin: 0">{{$other_fee->fee_name}}: <span>${{number_format((float)str_replace(",","",$other_fee->fee_amount), 2, '.', ',')}}</span></h4>
         @endforeach
         @if (!empty($data->fees->other_expenses))
          @foreach($data->fees->other_expenses as $other_expense)
-            <h4 style="margin: 0">{{$other_expense->name}}: <span>${{number_format($other_expense->amount, 2, '.', ',')}}</span></h4>
+            <h4 style="margin: 0">{{$other_expense->name}}: <span>${{number_format((float)str_replace(",","",$other_expense->amount), 2, '.', ',')}}</span></h4>
              @endforeach
         @endif
         
-        <h4 style="margin: 0">Listing Office Commission: <span>${{number_format($data->fees->sellerCommission, 2, '.', ',')}}</span></h4>
-        <h4 style="margin: 0">Buyer Agent Commission: <span>${{number_format($data->fees->buyerCommission, 2, '.', ',')}}</span></h4>
-        <h4 style="margin: 0">Taxes: <span>${{number_format($data->fees->taxes, 2, '.', ',')}}</span></h4>
+        <h4 style="margin: 0">Listing Office Commission: <span>${{number_format((float)str_replace(",","",$data->fees->sellerCommission), 2, '.', ',')}}</span></h4>
+        <h4 style="margin: 0">Buyer Agent Commission: <span>${{number_format((float)str_replace(",","",$data->fees->buyerCommission), 2, '.', ',')}}</span></h4>
+        <h4 style="margin: 0">Taxes: <span>${{number_format((float)str_replace(",","",$data->fees->taxes), 2, '.', ',')}}</span></h4>
     </div>
     <div style="font-size: 10px; margin: 30px auto">
         <p class="mb-4">

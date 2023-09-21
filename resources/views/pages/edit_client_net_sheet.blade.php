@@ -14,11 +14,13 @@
                     <!-- Title -->
                     <div class="">
                         <h1 class="block font-thin text-3xl md:text-5xl text-gray-200">
-                            Seller's Estimated Net Sheet
+                            {{ $netsheet->name }}
                         </h1>
-                       
                     </div>
                     <!-- End Title -->
+                    @php
+                        $data = json_decode($netsheet->data);
+                    @endphp
 
                     <div class="">
                         <p class="italic text-gray-300 text-lg">
@@ -38,14 +40,13 @@
         </div>
         <!-- End Hero -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 space-y-8" x-data="netSheet()">
-           
             <div class="flex flex-col md:flex-row">
-                
                 <div class="bg-white border md:p-10 mt-5 p-4 relative rounded-xl shadow-xl sm:mt-10 z-10 md:w-1/2">
                     <div class="mb-4 sm:mb-8">
                         <label class="block mb-2 text-sm font-medium">Property Address:</label>
                         <input type="text" id="autocomplete" x-on: show_label="false" placeholder="Address of property"
-                            class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500">
+                            class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                            value="{{ $data->form->street_number }} {{ $data->form->route }}">
                     </div>
 
                     <div class="mb-4 sm:mb-8">
@@ -56,7 +57,7 @@
                             </div>
                             <input type="text"
                                 class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
-                                x-model="form.price" placeholder="0.00" x-mask:dynamic="$money($input)">
+                                x-model="form.price" placeholder="0.00" value="" x-mask:dynamic="$money($input)">
                         </div>
                     </div>
                     <div class="mb-4 sm:mb-8">
@@ -166,7 +167,8 @@
 
                         <div class="col-md-4">
                             <h4 class="text-lg md:text-2xl text-blue-500">Seller's Proceeds</h4>
-                            <h3 x-money.en-US.USD.decimal="funds_to_seller" class="text-xl md:text-3xl text-green-700">
+                            <h3 x-money.en-US.USD.decimal="parseMoney(funds_to_seller)"
+                                class="text-xl md:text-3xl text-green-700">
                             </h3>
                             <span class="text-sm">Net At Closing</span>
                         </div>
@@ -192,7 +194,7 @@
                                     <span class="font-bold">Fees:</span>
                                 </div>
                                 <div class="col">
-                                    <span x-money.en-US.USD.decimal="totalFees"></span>
+                                    <span x-money.en-US.USD.decimal="parseMoney(totalFees)"></span>
                                 </div>
                             </div>
 
@@ -201,7 +203,7 @@
                                     <span class="font-bold">Net:</span>
                                 </div>
                                 <div class="col">
-                                    <span x-money.en-US.USD.decimal="funds_to_seller"></span>
+                                    <span x-money.en-US.USD.decimal="parseMoney(funds_to_seller)"></span>
                                 </div>
                             </div>
                         </div>
@@ -226,7 +228,7 @@
                                         <span x-text="fee.fee_name + ':'" class="font-bold"></span>
                                     </div>
                                     <div class="col align-self-center">
-                                        <span x-money.en-US.USD.decimal="'-' + fee.fee_amount"></span>
+                                        <span x-money.en-US.USD.decimal="'-' + parseMoney(fee.fee_amount)"></span>
                                     </div>
                                 </div>
                             </template>
@@ -272,7 +274,6 @@
                             @auth
                                 <button x-on:click="saveData = true"
                                     class="bg-blue-200 border border-blue-600 py-2 rounded text-blue-700">Save</button>
-                                   
                             @else
                                 <span><a class="text-blue-400 underline" href="{{ route('login') }}">Login</a> or <a
                                         class="text-blue-400 underline" href="{{ route('register') }}">register</a> for an
@@ -282,7 +283,7 @@
 
 
 
-                        <a x-bind:href="'/printSellerNetSheet/' + dataSaved.id" target="_blank"
+                        <a href="/printSellerNetSheet/{{ $netsheet->id }}" target="_blank"
                             class="bg-gray-100 border border-black flex hover:bg-blue-200 hover:text-blue-800 items-center justify-center py-2 rounded">Print</a>
 
                     </div>
@@ -379,7 +380,7 @@
                             x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
                             <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                                 <div class="sm:flex sm:items-start">
-                                    
+
                                     <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                                         <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Do
                                             you want to save this data?</h3>
@@ -391,28 +392,29 @@
                                             <input type="text"
                                                 class="py-3  px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                                                 x-model="savedDataName">
-                                            
+
 
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                
+
                                 <button x-on:click="saveData = false" type="button"
                                     class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Exit</button>
-                                    @auth
-                                    <button x-on:click.prevent="form ? updateData({{auth()->user()->id}}) : ''" type="button"
+                                @auth
+                                    <button x-on:click.prevent="form ? updateData({{ auth()->user()->id }}) : ''"
+                                        type="button"
                                         class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Save</button>
-                                    @endauth
-                                
+                                @endauth
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        {{-- @dd($data) --}}
     @endsection
     @section('scripts')
         <script src="https://maps.googleapis.com/maps/api/js?&libraries=places&key=AIzaSyB7Abs3JTCXWOlXBuiu42HMgM_KE9LPdio">
@@ -424,45 +426,50 @@
                 altFormat: "F j, Y",
                 dateFormat: "Y-m-d",
             });
-            function parseMoney(money){
-                var a='1,125';
-                money = money.toString().replace(/\,/g,''); // 1125, but a string, so convert it to number
-                money = parseInt(money,10);
+
+            function parseMoney(money) {
+                var a = '1,125';
+                money = money.toString().replace(/\,/g, ''); // 1125, but a string, so convert it to number
+                money = parseInt(money, 10);
                 console.log(money);
                 return money;
             }
+
             function pause(milliseconds = 1000) {
                 return new Promise(resolve => setTimeout(resolve, milliseconds));
             }
+            let savedNetsheet = {{ Js::from($netsheet) }};
+            let savedNetsheetData = {{ Js::from($data) }};
+
             let netSheet = function() {
                 return {
-                    savedDataName: '',
-                    funds_to_seller: '',
-                    fees: {},
-                    hasProcessed: false,
-                    totalFees: '',
-                    userId: '0',
+                    savedDataName: savedNetsheet.name,
+                    funds_to_seller: savedNetsheetData.funds_to_seller,
+                    fees: savedNetsheetData.fees,
+                    hasProcessed: true,
+                    totalFees: savedNetsheetData.totalFees,
+                    userId: savedNetsheet.user_id,
                     form: {
-                        feesPaidBy: 'seller',
-                        price: '',
-                        loan_balance: '',
-                        other_expenses: [],
-                        buyerCommission: '3',
-                        sellerCommission: '3',
-                        taxes: '',
-                        title_fee: '',
-                        total_other_fees: '',
-                        fee_type: '',
-                        is_taxes_percentage: 'no',
-                        is_commission_percentage: 'yes',
-                        closing_date: '',
-                        street_number: 'No',
-                        route: 'Address Given',
-                        postal_code: '-',
-                        latitude: '-',
-                        longitude: '-',
-                        locality: '-',
-                        administrative_area_level_1: 'IN'
+                        feesPaidBy: savedNetsheetData.form.feesPaidBy,
+                        price: savedNetsheetData.form.price,
+                        loan_balance: savedNetsheetData.form.loan_balance,
+                        other_expenses: savedNetsheetData.form.other_expenses,
+                        buyerCommission: savedNetsheetData.form.buyerCommission,
+                        sellerCommission: savedNetsheetData.form.sellerCommission,
+                        taxes: savedNetsheetData.form.taxes,
+                        title_fee: savedNetsheetData.form.title_fee,
+                        total_other_fees: savedNetsheetData.form.total_other_fees,
+                        fee_type: savedNetsheetData.form.fee_type,
+                        is_taxes_percentage: savedNetsheetData.form.is_taxes_percentage,
+                        is_commission_percentage: savedNetsheetData.form.is_commission_percentage,
+                        closing_date: savedNetsheetData.form.closing_date,
+                        street_number: savedNetsheetData.form.street_number,
+                        route: savedNetsheetData.form.route,
+                        postal_code: savedNetsheetData.form.postal_code,
+                        latitude: savedNetsheetData.form.latitude,
+                        longitude: savedNetsheetData.form.longitude,
+                        locality: savedNetsheetData.form.locality,
+                        administrative_area_level_1: savedNetsheetData.form.administrative_area_level_1
                     },
                     sumFees: function() {
                         const sumValues = obj => Object.values(this.fees.other_fees).reduce((a, b) => a + b.fee_amount,
@@ -478,18 +485,16 @@
                         this.form.other_expenses.splice(index, 1);
                     },
                     async retrieveFees() {
-                        if(this.form.taxes === ''){
+                        if (this.form.taxes === '') {
                             this.form.taxes = 0;
-                        }else{
+                        } else {
                             console.log('emnumberpty');
                         }
-                        if(this.form.loan_balance === ''){
+                        if (this.form.loan_balance === '') {
                             this.form.loan_balance = 0;
-                        }else{
+                        } else {
                             console.log('loan');
                         }
-
-                    
                         let response = await fetch('/calculateFees', {
                             method: 'POST',
                             headers: {
@@ -504,7 +509,6 @@
                             let sum = 0;
                             let sellerFees = 0;
                             // iterate over each item in the array
-
                             for (let i = 0; i < this.fees.other_fees.length; i++) {
 
                                 if (this.form.feesPaidBy === 'buyer') {
@@ -535,9 +539,11 @@
                             }
 
                             this.totalFees = parseFloat(this.form.title_fee) + parseFloat(this.form.total_other_fees) +
-                                parseFloat(parseMoney(this.fees.taxes)) + (parseFloat(parseMoney(this.fees.sellerCommission)) + parseFloat(parseMoney(this
+                                parseFloat(parseMoney(this.fees.taxes)) + (parseFloat(parseMoney(this.fees
+                                    .sellerCommission)) + parseFloat(parseMoney(this
                                     .fees.buyerCommission)) + total_other_expenses);
-                            this.funds_to_seller = (parseFloat(parseMoney(this.form.price)) - parseFloat(parseMoney(this.form.loan_balance))) -
+                            this.funds_to_seller = (parseFloat(parseMoney(this.form.price)) - parseFloat(parseMoney(this
+                                    .form.loan_balance))) -
                                 parseFloat(this.totalFees);
                             this.hasProcessed = true;
                             await this.submitData();
@@ -592,7 +598,7 @@
                             },
                             body: JSON.stringify({
                                 name: this.savedDataName,
-                                id: this.dataSaved.id,
+                                id: {{ $netsheet->id }},
                                 user_id: user_id,
                                 body: {
                                     form: this.form,
@@ -609,7 +615,7 @@
                             console.log(this.dataSaved);
                             flash('Net sheet was saved successfully!', 'success');
                             pause();
-                            location.assign('/edit-seller-netsheet/' + this.dataSaved.id);
+                            location.reload();
                         } else {
                             flash('Something went wrong. Please contact system admin', 'error')
                         }
@@ -620,6 +626,8 @@
                     },
                     modal: false,
                     init() {
+                        console.log(savedNetsheet);
+                        console.log(savedNetsheetData);
                         const autocomplete = new google.maps.places.Autocomplete(
                             /** @type {HTMLInputElement} */
                             (document.getElementById('autocomplete')), {

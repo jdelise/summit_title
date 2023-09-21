@@ -44,13 +44,17 @@
                         //dd($data);
                     @endphp
                    
-                       <a href="/printSellerNetSheet/{{$netsheet->id}}" target="_blank" class="border border-blue-300 flex flex-col hover:bg-gray-100 items-center p-2" title="Edit Netsheet">
+                       <div class="relative" x-data={
+                        
+                       }>
+                        <a href="/edit-seller-netsheet/{{$netsheet->id}}" target="_blank" class="border border-blue-300 flex flex-col hover:bg-gray-100 items-center p-2" title="Edit Netsheet">
                             <h4>{{ $netsheet->name }}</h4>
                             <span class="text-sm">Purchase Price</span>
-                            <span class="text-blue-700 text-lg">${{number_format($data->fees->request->price, 2, '.', ',')}}</span>
+                            <span class="text-blue-700 text-lg">${{number_format((float)str_replace(",","",$data->fees->request->price), 2, '.', ',')}}</span>
                             <span class="text-sm">Seller Net</span>
-                            <span class="text-blue-700 text-lg">${{number_format($data->funds_to_seller, 2, '.', ',')}}</span>
+                            <span class="text-blue-700 text-lg">${{number_format((float)str_replace(",","",$data->funds_to_seller), 2, '.', ',')}}</span>
                        </a>
+                       </div>
                     @endforeach
                 @else
                     <a href="{{ route('sellers_net_sheet') }}" class="bg-gradient-to-b from-blue-500/[.75]  p-4 rounded-lg text-center text-white to-black">Create your first net sheet now!</a>
