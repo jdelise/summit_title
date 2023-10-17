@@ -36,6 +36,11 @@ class PagesController extends Controller
     {
         return view('pages.contact');
     }
+    public function mortgageCalculator() {
+
+        return view('pages.mortgage_calculator');
+        
+    }
     function success()
     {
         return view('pages.success');

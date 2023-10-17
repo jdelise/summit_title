@@ -30,7 +30,18 @@
     <!-- End Hero -->
     <div class="lg:px-8 max-w-3xl mx-auto pb-20 px-4 sm:px-6 space-y-8 mt-10" >
         <form
-        x-data="{}" 
+        x-data="{
+            typeOfOrder: 'purchase_order',
+            showSellerName: false,
+            checkOrderType(value) {
+                if(value === 'preliminary_order'){
+                    this.showSellerName = true
+                }else{
+                    this.showSellerName = false
+                }
+            }
+        }" 
+        x-init="$watch('typeOfOrder', value => checkOrderType(value))"
         method="POST"
         enctype="multipart/form-data"
         x-on:keydown.enter.prevent="" 
@@ -46,8 +57,37 @@
                 <input type="hidden" name="latitude" id="latitude" value="{{old('latitude')}}"/>
                 <input type="hidden" name="longitude" id="longitude" value="{{old('longitude')}}"/>
         <div class="flex flex-col space-y-5">
+            
+                <label class="block mb-2 text-sm font-medium">Type of Order:</label>
+                <div class="flex items-center gap-x-2">
+                    <input type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        x-model="typeOfOrder" value="purchase_order" >
+                    <label class="block text-sm font-medium leading-6 text-gray-900">Purchase Order</label>
+                    <input type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        x-model="typeOfOrder" value="preliminary_order" >
+                    <label class="block text-sm font-medium leading-6 text-gray-900">Preliminary Order</label>
+                </div>
+                
+                
+            
+            <template x-if="showSellerName">
+                <div>
+                    <label class="block mb-2 text-sm font-medium"><span class="text-red-400 mr-1">*</span>Seller's Full Name:</label>
+                                <input type="text"
+                                       class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                                       placeholder="Please enter the seller's full name"
+                                       name="seller_name"
+                                       value="{{old('seller_name')}}"
+                                >
+                                @error('seller_name')
+                                <span class="mt-2 text-sm text-red-600">You must enter a valid name</span>
+                                @enderror
+                                
+                </div>
+            </template>
+            
             <div>
-                <label class="block mb-2 text-sm font-medium"><span class="text-red-400 mr-1">*</span>Full Name:</label>
+                <label class="block mb-2 text-sm font-medium"><span class="text-red-400 mr-1">*</span>Agent Full Name:</label>
                             <input type="text"
                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                                    placeholder="Please enter your full name"
@@ -61,7 +101,7 @@
             </div>
             <div class="flex flex-col md:flex-row md:space-x-4">
                 <div class="md:w-1/2">
-                    <label class="block mb-2 text-sm font-medium"><span class="text-red-400 mr-1">*</span>Email Address:</label>
+                    <label class="block mb-2 text-sm font-medium"><span class="text-red-400 mr-1">*</span>Agent Email Address:</label>
                     <input type="agent_email"
                            class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                            placeholder="Please enter your email address" 
@@ -73,7 +113,7 @@
                             @enderror
                 </div>
                 <div class="md:w-1/2">
-                    <label class="block mb-2 text-sm font-medium"><span class="text-red-400 mr-1">*</span>Phone Number:</label>
+                    <label class="block mb-2 text-sm font-medium"><span class="text-red-400 mr-1">*</span>Agent Phone Number:</label>
                     <input type="text"
                            class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                            x-mask="(999) 999-9999"

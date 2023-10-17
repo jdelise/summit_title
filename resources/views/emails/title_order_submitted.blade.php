@@ -37,12 +37,16 @@ style="width:100%;">
                                     style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;font-weight:500;line-height:2;text-align:left;color:#000000;">
                                     <h2>A new title order has been submitted!</h2>
                                     <p>
+                                        Order Type: {{$request->typeOfOrder}} <br>
                                         Street Number: {{$request->street_number}} <br>
                                         Street Name: {{$request->route}} <br>
                                         Unit: {{$request->unit}} <br>
                                         City: {{$request->locality}} <br>
                                         State: {{$request->administrative_area_level_1}} <br>
                                         Zip Code: {{$request->zip_code}} <br>
+                                        @if(isset($request->seller_name) && $request->seller_name != '')
+                                         Seller Name: {{$request->seller_name}} <br>
+                                        @endif
                                         Agent Name: {{$request->agent_name}} <br>
                                         Agent Email: {{$request->agent_email_address}} <br>
                                         Agent Phone: {{$request->agent_phone_number}} <br>
