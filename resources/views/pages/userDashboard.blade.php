@@ -30,13 +30,15 @@
                 @if (auth()->user()->netsheets->count() > 0)
                 <a href="{{ route('sellers_net_sheet') }}" class="bg-gradient-to-b from-blue-500/[.75] md:w-2/3 p-4 rounded-lg text-center text-white to-black">Create a net sheet</a>
                 @endif
+
+                
             </div>
             <div class="md:w-3/4 flex flex-col">
                 <span class="text-2xl">
                     My Netsheets
                 </span>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 space-x-4 mt-4 space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                 @if (auth()->user()->netsheets->count() > 0)
                     @foreach (auth()->user()->netsheets->sortDesc() as $netsheet)
                     @php

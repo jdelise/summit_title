@@ -32,6 +32,36 @@ class AuthenticatedSessionController extends Controller
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
+    public function ajaxStore(Request $request)
+    {
+
+            $credentials = $request->validate([
+                'email' => ['required','email'],
+                'password' => ['required']
+            ]);
+
+            if(Auth::attempt($credentials)){
+
+                return response()->json([
+                    'auth' => true,
+                    'user' => auth()->user(),
+                    'message' => 'success'
+                ]);
+
+            }
+
+            return response()->json([
+                'message' => 'The provided credentials do not match our records'
+            ]);
+    
+       
+        
+        //$request->authenticate();
+
+        //$request->session()->regenerate();
+
+        //return auth()->user();
+    }
     /**
      * Destroy an authenticated session.
      */

@@ -41,6 +41,11 @@ class PagesController extends Controller
         return view('pages.mortgage_calculator');
         
     }
+    public function community_media_room() {
+
+        return view('pages.community_media_room');
+        
+    }
     function success()
     {
         return view('pages.success');

@@ -22,6 +22,10 @@ Route::middleware('guest')->group(function () {
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
+    Route::post('ajax-login', [AuthenticatedSessionController::class, 'ajaxStore']);
+
+    Route::post('ajax-register', [RegisteredUserController::class, 'ajaxStore']);
+
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');
 

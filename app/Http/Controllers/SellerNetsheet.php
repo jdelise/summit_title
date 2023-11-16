@@ -82,6 +82,7 @@ class SellerNetsheet extends Controller
     function saveSellersNetSheet(Request $request) {
         $netsheet = new NetSheet;
         $netsheet->name = $request->name;
+        $netsheet->user_id = $request->user_id;
         $netsheet->data = json_encode($request->body);
         $netsheet->save();
 

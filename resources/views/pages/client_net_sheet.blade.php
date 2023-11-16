@@ -274,8 +274,8 @@
                                     class="bg-blue-200 border border-blue-600 py-2 rounded text-blue-700">Save</button>
                                    
                             @else
-                                <span><a class="text-blue-400 underline" href="{{ route('login') }}">Login</a> or <a
-                                        class="text-blue-400 underline" href="{{ route('register') }}">register</a> for an
+                                <span><a class="text-blue-400 underline" href="#" x-on:click="loginModal = true">Login</a> or <a
+                                        class="text-blue-400 underline" href="#" x-on:click="registerModal = true">register</a> for an
                                     account to save your net sheets</span>
                             @endauth
                         @endif
@@ -316,26 +316,88 @@
                 </p>
             </div>
 
-            <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true" x-show="modal">
-
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-                    x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
-                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"></div>
-
-                <div class="fixed inset-0 z-10 overflow-y-auto">
-                    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                        <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
-                            x-transition:enter="ease-out duration-300"
-                            x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                            x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                            x-transition:leave="ease-in duration-200"
-                            x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                            x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                            <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                                <div class="sm:flex sm:items-start">
-                                    <div
-                                        class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+            <x-popup x-show="loginModal">
+                <div class="flex flex-col">
+                    <h3 class="mb-4 text-2xl font-bold">Login</h3>
+                    <div class="border-2 border-blue-300 p-4 rounded-lg">
+                        <div class="mb-4 sm:mb-8">
+                            <label class="block mb-2 text-sm font-medium">Username:</label>
+                            <div class="relative mt-2 rounded-md shadow-sm">
+                                <input type="text"
+                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                                    x-model="username" placeholder="Username" required autocomplete="username">
+                            </div>
+                        </div>
+                        <div class="mb-4 sm:mb-8">
+                            <label class="block mb-2 text-sm font-medium">Password:</label>
+                            <div class="relative mt-2 rounded-md shadow-sm">
+                                
+                                <input type="password"
+                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                                    x-model="password"  required autocomplete="current-password">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <x-slot name="footer">
+                    <button x-on:click="loginModal = false" type="button"
+                                    class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+                    <button x-on:click="login" type="button"
+                                    class="mt-3 inline-flex w-full justify-center rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto mr-4">Login</button>
+                    
+                </x-slot>
+            </x-popup> 
+            <x-popup x-show="registerModal">
+                <div class="flex flex-col">
+                    <h3 class="mb-4 text-2xl font-bold">Register</h3>
+                    <div class="border-2 border-blue-300 p-4 rounded-lg">
+                        <div class="mb-4 sm:mb-8">
+                            <label class="block mb-2 text-sm font-medium">Name:</label>
+                            <div class="relative mt-2 rounded-md shadow-sm">
+                                <input type="text"
+                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                                    x-model="registerName" placeholder="Username" required autofocus autocomplete="name">
+                                   
+                            </div>
+                        </div>
+                        <div class="mb-4 sm:mb-8">
+                            <label class="block mb-2 text-sm font-medium">Email:</label>
+                            <div class="relative mt-2 rounded-md shadow-sm">
+                                <input type="text"
+                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                                    x-model="registerEmail" placeholder="Username" required autocomplete="username">
+                            </div>
+                        </div>
+                        <div class="mb-4 sm:mb-8">
+                            <label class="block mb-2 text-sm font-medium">Password:</label>
+                            <div class="relative mt-2 rounded-md shadow-sm">
+                                
+                                <input type="password"
+                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                                    x-model="registerPassword"  required autocomplete="new-password">
+                            </div>
+                        </div>
+                        <div class="mb-4 sm:mb-8">
+                            <label class="block mb-2 text-sm font-medium">Password:</label>
+                            <div class="relative mt-2 rounded-md shadow-sm">
+                                
+                                <input type="password"
+                                    class="py-3  pl-7 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                                    x-model="password_confirmation"  required autocomplete="new-password">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <x-slot name="footer">
+                    <button x-on:click="registerModal = false" type="button"
+                                    class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
+                    <button x-on:click="register" type="button"
+                                    class="mt-3 inline-flex w-full justify-center rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto mr-4">Register</button>
+                    
+                </x-slot>
+            </x-popup> 
+            <x-popup x-show="modal"> 
+                <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
                                         <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -350,67 +412,36 @@
                                                 purchase price field.</p>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                <button x-on:click="modal = false" type="button"
+                <x-slot name="footer">
+                    <button x-on:click="modal = false" type="button"
                                     class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Exit</button>
-                            </div>
-                        </div>
-                    </div>
+                </x-slot>
+            </x-popup>
+
+            <x-popup x-show="saveData">
+                <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Do
+                    you want to save this data?</h3>
+                <div class="mt-2">
+                    <p class="text-sm text-gray-500">Please enter a name for your saved seller's
+                        net sheet. e.g. Property Address or Client Name</p>
                 </div>
-            </div>
-            <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true"
-                x-show="saveData">
+                <div class="mt-4 sm:mb-8">
+                    <input type="text"
+                        class="py-3  px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                        x-model="savedDataName">
+                    
 
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-                    x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
-                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"></div>
-
-                <div class="fixed inset-0 z-10 overflow-y-auto">
-                    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                        <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
-                            x-transition:enter="ease-out duration-300"
-                            x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                            x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                            x-transition:leave="ease-in duration-200"
-                            x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                            x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                            <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                                <div class="sm:flex sm:items-start">
-                                    
-                                    <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                                        <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Do
-                                            you want to save this data?</h3>
-                                        <div class="mt-2">
-                                            <p class="text-sm text-gray-500">Please enter a name for your saved seller's
-                                                net sheet. e.g. Property Address or Client Name</p>
-                                        </div>
-                                        <div class="mt-4 sm:mb-8">
-                                            <input type="text"
-                                                class="py-3  px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
-                                                x-model="savedDataName">
-                                            
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                
-                                <button x-on:click="saveData = false" type="button"
-                                    class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Exit</button>
-                                    @auth
-                                    <button x-on:click.prevent="form ? updateData({{auth()->user()->id}}) : ''" type="button"
-                                        class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Save</button>
-                                    @endauth
-                                
-                            </div>
-                        </div>
-                    </div>
                 </div>
-            </div>
+                <x-slot name="footer">
+                    <button x-on:click="saveData = false" type="button"
+                    class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Exit</button>
+                    @auth
+                    <button x-on:click.prevent="form ? updateUserIdAndSave({{auth()->user()->id}}) : ''" type="button"
+                        class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Save</button>
+                    @endauth
+                </x-slot>
+            </x-popup>
+            
         </div>
 
     @endsection
@@ -426,22 +457,40 @@
             });
             function parseMoney(money){
                 var a='1,125';
-                money = money.toString().replace(/\,/g,''); // 1125, but a string, so convert it to number
-                money = parseInt(money,10);
-                console.log(money);
-                return money;
+                if(money === ''){
+                    
+                    console.log(parseInt(0, 10));
+                    return parseInt(0, 10);
+                }else{
+                    money = money.toString().replace(/\,/g,''); // 1125, but a string, so convert it to number
+                    money = parseInt(money,10);
+                    console.log(money);
+                    return money;
+                }
             }
             function pause(milliseconds = 1000) {
                 return new Promise(resolve => setTimeout(resolve, milliseconds));
             }
             let netSheet = function() {
                 return {
+                    username: '',
+                    password: '',
+                    registerName: '',
+                    registerEmail: '',
+                    registerPassword: '',
+                    password_confirmation: '',
                     savedDataName: '',
                     funds_to_seller: '',
-                    fees: {},
+                    loginModal: false,
+                    registerModal: false,
+                    fees: {
+                        sellerCommission: '',
+                        buyerCommission: '',
+                        taxes: '',
+                    },
                     hasProcessed: false,
                     totalFees: '',
-                    userId: '0',
+                    userId: 0,
                     form: {
                         feesPaidBy: 'seller',
                         price: '',
@@ -551,6 +600,94 @@
                     saveData: false,
                     dataSaved: {},
                     wasNetSheetSaved: '',
+                    async login() {
+                        let response = await fetch('/ajax-login', {
+                            method: 'POST',
+                            headers: {
+                                'Content-type': 'application/json; charset=UTF-8',
+                                'X-CSRF-TOKEN': document.head.querySelector('meta[name=csrf-token]').content
+                            },
+                            body: JSON.stringify({
+                                email: this.username,
+                                password: this.password,
+                            }),
+                        });
+                        if (response.ok) {
+                            let userData = await response.json();
+                            if(userData.message === 'success'){
+                                this.userId = userData.user.id;
+                                this.loginModal = false;
+                                pause();
+                                this.updateData();
+                                console.log(userData);
+                            }else{
+                                this.loginModal = false;
+                                flash(userData.message, 'error')
+                            }
+                            
+                            
+                            
+                        } else {
+                            flash('Something went wrong. Please contact system admin', 'error')
+                        }
+                    },
+                    async register() {
+                        let response = await fetch('/ajax-register', {
+                            method: 'POST',
+                            headers: {
+                                'Content-type': 'application/json; charset=UTF-8',
+                                'X-CSRF-TOKEN': document.head.querySelector('meta[name=csrf-token]').content
+                            },
+                            body: JSON.stringify({
+                                name: this.registerName,
+                                email: this.registerEmail,
+                                password: this.registerPassword,
+                                password_confirmation: this.password_confirmation
+                            }),
+                        });
+                        if (response.ok) {
+                            let userData = await response.json();
+                            if(userData.message === 'success'){
+                                this.userId = userData.user.id;
+                                this.loginModal = false;
+                                pause();
+                                this.updateData();
+                                console.log(userData);
+                            }else{
+                                this.loginModal = false;
+                                console.log(userData.message);
+                                if(userData.message.name){
+                                    for (let n = 0; n < userData.message.name.length; n++) {
+                                    console.log(userData.message.name[n]);
+                                    flash(userData.message.name[n], 'error')
+                                 }
+                                }
+                                if(userData.message.email){
+                                    for (let i = 0; i < userData.message.email.length; i++) {
+                                    console.log(userData.message.email[i]);
+                                    flash(userData.message.email[i], 'error')
+                                 }
+                                }
+                                 if(userData.message.password){
+                                    for (let p = 0; p < userData.message.password.length; p++) {
+                                    console.log(userData.message.password[p]);
+                                    flash(userData.message.password[p], 'error')
+                                 }
+                                 }
+                                 
+                                
+                            }
+                            
+                            
+                            
+                        } else {
+                            flash('Something went wrong. Please contact system admin', 'error')
+                        }
+                    },
+                    updateUserIdAndSave(user_id) {
+                        this.userId = user_id;
+                        this.updateData();
+                    },
                     async submitData() {
 
                         let response = await fetch('/saveSellersNetSheet', {
@@ -561,7 +698,7 @@
                             },
                             body: JSON.stringify({
                                 name: this.form.street_number + ' ' + this.form.route,
-                                user_id: 0,
+                                user_id: this.userId,
                                 body: {
                                     form: this.form,
                                     funds_to_seller: this.funds_to_seller,
@@ -575,15 +712,20 @@
                         if (response.ok) {
                             this.dataSaved = await response.json();
 
-                            console.log(this.dataSaved);
+                            //console.log(this.dataSaved);
 
                         } else {
                             flash('Something went wrong. Please contact system admin', 'error')
                         }
 
                     },
-                    async updateData(user_id = 0) {
-
+                    async updateData() {
+                        let updatedName = '';
+                        if(this.savedDataName === ''){
+                            updatedName = this.form.street_number + ' ' + this.form.route;
+                        }else{
+                            updatedName = this.savedDataName;
+                        }
                         let response = await fetch('/updateSellersNetSheet', {
                             method: 'POST',
                             headers: {
@@ -591,9 +733,9 @@
                                 'X-CSRF-TOKEN': document.head.querySelector('meta[name=csrf-token]').content
                             },
                             body: JSON.stringify({
-                                name: this.savedDataName,
+                                name: updatedName,
                                 id: this.dataSaved.id,
-                                user_id: user_id,
+                                user_id: this.userId,
                                 body: {
                                     form: this.form,
                                     funds_to_seller: this.funds_to_seller,
@@ -606,7 +748,7 @@
                         if (response.ok) {
                             this.dataSaved = await response.json();
                             this.saveData = false;
-                            console.log(this.dataSaved);
+                            //console.log(this.dataSaved);
                             flash('Net sheet was saved successfully!', 'success');
                             pause();
                             location.assign('/edit-seller-netsheet/' + this.dataSaved.id);
