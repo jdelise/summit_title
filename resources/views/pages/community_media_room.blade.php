@@ -39,7 +39,7 @@
                     Realtors, lenders, and our local community.
                     This welcoming room is a hub of creativity and collaboration, available for free use by those looking to
                     connect and engage with clients and neighbors.</p>
-                <p class="leading-7 mb-4 text-lg">commitment to a dynamic atmosphere means the decor changes seasonally, ensuring every
+                <p class="leading-7 mb-4 text-lg">Commitment to a dynamic atmosphere means the decor changes seasonally, ensuring every
                     visit is a fresh and inspiring experience. Whether you're a Realtor filming a video presentation, a
                     lender conducting online workshops,
                     or a member of our community seeking a space to meet and brainstorm, our Community Media Room is here to
