@@ -36,6 +36,7 @@ Route::get('/tools/sellers_net_sheet', function (){
 })->name('sellers_net_sheet');
 //Route::get('/test', [\App\Http\Controllers\SellerNetsheet::class, 'index']);
 Route::get('/fee', [\App\Http\Controllers\SellerNetsheet::class, 'getTitlePremium']);
+Route::get('/deleteSellerNetSheet/{id}', [\App\Http\Controllers\SellerNetsheet::class, 'deleteSellerNetSheet']);
 Route::get('/printSellerNetSheet/{id}', [\App\Http\Controllers\SellerNetsheet::class, 'printSellerNetSheet']);
 Route::get('/edit-seller-netsheet/{id}', [\App\Http\Controllers\SellerNetsheet::class, 'editSellerNetSheet']);
 Route::post('/calculateFees', [\App\Http\Controllers\SellerNetsheet::class, 'calculateFees']);

@@ -92,13 +92,18 @@ class SellerNetsheet extends Controller
     {
         $netsheet = NetSheet::find($id);
         $pdf = PDF::loadView('pdf.netSheetPDF', compact('netsheet'));
-        return $pdf->stream($netsheet->name . '.pdf');
+        return $pdf->download($netsheet->name . '.pdf');
     }
     public function editSellerNetSheet($id) {
 
         $netsheet = NetSheet::find($id);
 
         return view('pages.edit_client_net_sheet', compact('netsheet'));
+    }
+    public function deleteSellerNetSheet($id) {
+        $netsheet = NetSheet::find($id);
+        $netsheet->delete();
+        return redirect('/dashboard');
     }
     public function updateSellersNetSheet(Request $request)
     {

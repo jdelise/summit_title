@@ -27,12 +27,13 @@
                             An easy, straightforward way to estimate your net proceeds.
                         </p>
                         @auth
-                        <div class="mt-3">
-                            <a href="/dashboard" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">My Netsheets</a>
-                        </div>
-                    @else
-        
-                    @endauth
+                            <div class="mt-3">
+                                <a href="/dashboard"
+                                    class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">My
+                                    Netsheets</a>
+                            </div>
+                        @else
+                        @endauth
                     </div>
                 </div>
 
@@ -151,7 +152,7 @@
                                 x-model="form.is_taxes_percentage" value="yes">
                             <label class="block text-sm font-medium leading-6 text-gray-900">%</label>
                         </div>
-                        <label class="block mb-2 text-sm font-medium">Taxes:</label>
+                        <label class="block mb-2 text-sm font-medium">Annual Taxes:</label>
                         <input type="text"
                             class="py-3  px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                             x-model="form.taxes" x-mask:dynamic="$money($input)">
@@ -281,11 +282,15 @@
                             @endauth
                         @endif
 
+                        <button x-on:click.prevent="form ? updateDataThenPrint({{ auth()->user()->id }}) : ''"
+                            type="button"
+                            class="bg-gray-100 border border-black flex hover:bg-blue-200 hover:text-blue-800 items-center justify-center py-2 rounded">
+                            Print
+                        </button>
 
-
-                        <a href="/printSellerNetSheet/{{ $netsheet->id }}" target="_blank"
-                            class="bg-gray-100 border border-black flex hover:bg-blue-200 hover:text-blue-800 items-center justify-center py-2 rounded">Print</a>
-
+                        <a href="/deleteSellerNetSheet/{{ $netsheet->id }}"
+                            class="bg-red-500 border text-white border-black flex hover:bg-red-700 items-center justify-center py-2 rounded">Delete
+                            Net Sheet</a>
                     </div>
                     <div>
                         <p class="text-green-500" x-text="wasNetSheetSaved"></p>
@@ -616,6 +621,39 @@
                             flash('Net sheet was saved successfully!', 'success');
                             pause();
                             location.reload();
+                        } else {
+                            flash('Something went wrong. Please contact system admin', 'error')
+                        }
+
+                    },
+                    async updateDataThenPrint(user_id = 0) {
+
+                        let response = await fetch('/updateSellersNetSheet', {
+                            method: 'POST',
+                            headers: {
+                                'Content-type': 'application/json; charset=UTF-8',
+                                'X-CSRF-TOKEN': document.head.querySelector('meta[name=csrf-token]').content
+                            },
+                            body: JSON.stringify({
+                                name: this.savedDataName,
+                                id: {{ $netsheet->id }},
+                                user_id: user_id,
+                                body: {
+                                    form: this.form,
+                                    funds_to_seller: this.funds_to_seller,
+                                    fees: this.fees,
+                                    request: this.fees.request,
+                                    totalFees: this.totalFees
+                                }
+                            }),
+                        });
+                        if (response.ok) {
+                            var netID = {{ $netsheet->id }};
+                            this.dataSaved = await response.json();
+                            console.log(netID);
+                            pause();
+                            window.open('/printSellerNetSheet/' + netID, '_blank');
+                           //window.location.html("/deleteSellerNetSheet/" . netID);
                         } else {
                             flash('Something went wrong. Please contact system admin', 'error')
                         }

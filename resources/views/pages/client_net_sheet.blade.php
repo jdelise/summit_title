@@ -150,7 +150,7 @@
                                 x-model="form.is_taxes_percentage" value="yes">
                             <label class="block text-sm font-medium leading-6 text-gray-900">%</label>
                         </div>
-                        <label class="block mb-2 text-sm font-medium">Taxes:</label>
+                        <label class="block mb-2 text-sm font-medium">Annual Taxes:</label>
                         <input type="text"
                             class="py-3  px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                             x-model="form.taxes" x-mask:dynamic="$money($input)">
