@@ -1,7 +1,7 @@
     @extends('layouts.master')
     @section('title', 'Seller Net Sheet | Summit Title')
     @section('styles')
-        <script defer src="https://unpkg.com/alpinejs-money@latest/dist/money.min.js"></script>
+
         <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @endsection
