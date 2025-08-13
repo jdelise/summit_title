@@ -28,6 +28,8 @@ Route::get('/', function () {
 Route::get('/success', function () {
     return view('pages.success');
 })->name('success');
+Route::get('/test-fees', [TestingController::class, 'getTitleFees']);
+Route::post('/update-fees', [TestingController::class, 'updateTitleFees']);
 Route::get('/test-home', function () {
     return view('test.test_home');
 });
