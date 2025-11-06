@@ -53,7 +53,7 @@ Route::get('services',[PagesController::class, 'services'])->name('services');
 Route::get('location', [PagesController::class, 'location'])->name('location');
 Route::get('contact', [PagesController::class,'contact'])->name('contact');
 Route::get('success', [PagesController::class,'success'])->name('success');
-Route::get('community_media_room', [PagesController::class,'community_media_room'])->name('community_media_room');
+//Route::get('community_media_room', [PagesController::class,'community_media_room'])->name('community_media_room');
 Route::get('mortgage-calculator', [PagesController::class,'mortgageCalculator'])->name('mortgage_calculator');
 
 Route::match(['get', 'post'],'contact_form_submit', [PagesController::class, 'contactFormSubmitted']);

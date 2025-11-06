@@ -149,7 +149,7 @@
                     <div class="border flex flex-col p-4 rounded-lg shadow-lg w-full">
                         <span class="font-bold mb-2 text-lg">Address:</span>
                         <span>
-                            11550 N Meridian St #235<br>
+                            11595 N Meridian St, Suite 225<br>
                             Carmel, IN 46032
                         </span>
                         <span class="font-bold my-2 text-lg">Hours:</span>
