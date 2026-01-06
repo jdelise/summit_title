@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $script = getcwd().'/database/seeders/db_backup.sql';
+        $script = getcwd().'/database/seeders/db_backup_new.sql';
         $username = config('database.connections.mysql.username');
         $password = config('database.connections.mysql.password');
         $database = config('database.connections.mysql.database');
